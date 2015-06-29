@@ -20,7 +20,7 @@ public abstract class  Piece {
   /** Black pieces are uppercase, white lowercase */
   public abstract String getAbbreviation();
 
-  public abstract void validate(int[] from, int[] to);
+  public abstract void validate(Position from, Position to);
 
 }
 

@@ -22,7 +22,8 @@ public class Knight extends Piece {
     return getOwner() == BLACK ? "K" : "k";
   }
 
-  public void validate(int[] from, int[] to) {
+  @Override
+  public void validate(Position from, Position to) {
   }
 
 }

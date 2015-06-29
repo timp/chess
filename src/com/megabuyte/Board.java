@@ -41,15 +41,15 @@ public class Board {
       positions[y][6] = new Position(6, y, new Pawn(WHITE));
     }
 
-    positions[0][7] = new Position(0, 0, new Rook(WHITE));
-    positions[1][7] = new Position(0, 1, new Knight(WHITE));
-    positions[2][7] = new Position(0, 2, new Bishop(WHITE));
+    positions[0][7] = new Position(7, 0, new Rook(WHITE));
+    positions[1][7] = new Position(7, 1, new Knight(WHITE));
+    positions[2][7] = new Position(7, 2, new Bishop(WHITE));
     // King on the opposite of his queen's colour
-    positions[3][7] = new Position(0, 3, new King(WHITE));
-    positions[4][7] = new Position(0, 4, new Queen(WHITE));
-    positions[5][7] = new Position(0, 5, new Bishop(WHITE));
-    positions[6][7] = new Position(0, 6, new Knight(WHITE));
-    positions[7][7] = new Position(0, 7, new Rook(WHITE));
+    positions[3][7] = new Position(7, 3, new Queen(WHITE));
+    positions[4][7] = new Position(7, 4, new King(WHITE));
+    positions[5][7] = new Position(7, 5, new Bishop(WHITE));
+    positions[6][7] = new Position(7, 6, new Knight(WHITE));
+    positions[7][7] = new Position(7, 7, new Rook(WHITE));
   }
   
   public String toString() {
@@ -78,6 +78,8 @@ public class Board {
     Position to = positions[toCoords[0]][toCoords[1]];
     Path path = validate(from, to);
 
+    // TODO Validate path
+
     to.setPiece(from.getPiece());
     from.setPiece(null);
     return this;
@@ -90,6 +92,7 @@ public class Board {
     if (candidate.getPiece() != null && (candidate.getPiece().getOwner() == current.getPiece().getOwner()) ) {
       throw new InvalidMoveException("Player already occupies " + candidate);
     }
+    // TODO return path
 
     return new Path();
   }

@@ -24,7 +24,7 @@ public class Bishop extends Piece {
   }
 
   @Override
-  public void validate(int[] from, int[] to) {
+  public void validate(Position from, Position to) {
 
   }
 
