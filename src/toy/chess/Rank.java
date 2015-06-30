@@ -8,6 +8,8 @@ public enum Rank {
 
   private int coord;
 
+  private static String[] names = "abcdefgh".split("");
+
   Rank(int yCoord) {
     this.coord = yCoord;
   }
@@ -15,6 +17,14 @@ public enum Rank {
   /** Exploiting the zero based index/coordinate coincidence. */
   public static Rank byIndex(int coord) {
     return values()[coord];
+  }
+
+  public static Rank byName(String name) {
+    return valueOf(name.toUpperCase());
+  }
+
+  public static String[] names() {
+    return names;
   }
 
   public int getCoord() {

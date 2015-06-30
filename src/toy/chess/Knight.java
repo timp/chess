@@ -6,7 +6,7 @@ package toy.chess;
  */
 public class Knight extends Piece {
 
-  public Knight(Owner o) {
+  public Knight(Player o) {
     super(o);
   }
 
@@ -17,7 +17,7 @@ public class Knight extends Piece {
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == Owner.BLACK ? "K" : "k";
+    return getOwner() == Player.BLACK ? "K" : "k";
   }
 
   @Override

@@ -14,6 +14,7 @@ public enum File {
   EIGHT(7);
 
   int coord;
+  private static String[] names = "12345678".split("");
 
   File(int xCoord) {
     this.coord = xCoord;
@@ -22,6 +23,18 @@ public enum File {
   /** Exploiting the zero based index/coordinate coincidence. */
   public static File byIndex(int coord) {
     return values()[coord];
+  }
+  public static File byName(String name) {
+    for (File v : values()) {
+      if (String.valueOf(v.coord + 1).equals(name)) {
+        return v;
+      }
+    }
+    throw new IllegalArgumentException("No File named '" + name + "'");
+  }
+
+  public static String[] names() {
+    return names;
   }
 
   public String toString() {

@@ -5,13 +5,13 @@ package toy.chess;
  * @since 2015/06/29
  */
 public abstract class Piece {
-  Owner owner = null;
+  Player owner = null;
 
-  public Piece(Owner owner) {
+  public Piece(Player owner) {
     this.owner = owner;
   }
 
-  public Owner getOwner() {
+  public Player getOwner() {
     return this.owner;
   }
 

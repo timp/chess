@@ -43,4 +43,15 @@ public class BoardTest extends TestCase {
 
   }
 
+  public void testPic() {
+    assertEquals(
+        "# # # # \n" +
+        " # # # #\n" +
+        "# # # # \n" +
+        " # # # #\n" +
+        "# # # # \n" +
+        " # # # #\n" +
+        "# # # # \n" +
+        " # # # #\n", new Board().pic());
+  }
 }

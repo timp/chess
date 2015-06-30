@@ -1,6 +1,6 @@
 package toy.chess;
 
-import static toy.chess.Owner.BLACK;
+import static toy.chess.Player.BLACK;
 
 /**
  * @author timp
@@ -8,7 +8,7 @@ import static toy.chess.Owner.BLACK;
  */
 public class Queen extends Piece {
 
-  public Queen(Owner o) {
+  public Queen(Player o) {
     super(o);
   }
 

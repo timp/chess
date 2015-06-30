@@ -38,4 +38,7 @@ public class Position {
   }
 
 
+  public Square getSquare() {
+    return square;
+  }
 }
