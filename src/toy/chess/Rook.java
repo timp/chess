@@ -1,26 +1,25 @@
-package com.megabuyte;
+package toy.chess;
 
-import static com.megabuyte.Owner.BLACK;
+import static toy.chess.Owner.BLACK;
 
 /**
  * @author timp
  * @since 2015/06/29
  */
-public class Bishop extends Piece {
+public class Rook extends Piece {
 
-  public Bishop(Owner o) {
+  public Rook(Owner o) {
     super(o);
   }
 
   @Override
   public String getName() {
-    return "Bishop";
+    return "Rook";
   }
-
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == BLACK ? "B" : "b";
+    return getOwner() == BLACK ? "R" : "r";
   }
 
   @Override

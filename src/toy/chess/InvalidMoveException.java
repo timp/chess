@@ -1,4 +1,4 @@
-package com.megabuyte;
+package toy.chess;
 
 public class InvalidMoveException extends RuntimeException {
   public InvalidMoveException(String message ) {

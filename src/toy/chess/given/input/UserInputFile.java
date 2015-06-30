@@ -4,11 +4,10 @@
 //
 //  Derived from com.siteintel.progtest.input.UserInputFile
 //
+package toy.chess.given.input;
 
-package com.siteintel.progtest.input;
-
-import com.siteintel.progtest.input.UserInput;
-import com.siteintel.progtest.input.UserInputException;
+import toy.chess.given.input.UserInput;
+import toy.chess.given.input.UserInputException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

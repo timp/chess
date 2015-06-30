@@ -1,6 +1,4 @@
-package com.megabuyte;
-
-import static com.megabuyte.Owner.BLACK;
+package toy.chess;
 
 /**
  * @author timp
@@ -19,7 +17,7 @@ public class King extends Piece {
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == BLACK ? "P" : "p";
+    return getOwner() == Owner.BLACK ? "P" : "p";
   }
 
   @Override

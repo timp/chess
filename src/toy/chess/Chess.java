@@ -1,7 +1,7 @@
-package com.megabuyte;
+package toy.chess;
 
-import com.siteintel.progtest.input.UserInputException;
-import com.siteintel.progtest.input.UserInputFile;
+import toy.chess.given.input.UserInputException;
+import toy.chess.given.input.UserInputFile;
 
 import java.io.IOException;
 

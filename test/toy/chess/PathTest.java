@@ -1,4 +1,4 @@
-package com.megabuyte;
+package toy.chess;
 
 import junit.framework.TestCase;
 

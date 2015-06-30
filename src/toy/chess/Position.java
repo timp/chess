@@ -1,4 +1,4 @@
-package com.megabuyte;
+package toy.chess;
 
 /**
  * A position on a Chess board.

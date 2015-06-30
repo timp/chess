@@ -4,7 +4,7 @@
 //
 //  Derived from com.siteintel.progtest.input.UserInputException
 //
-package com.siteintel.progtest.input;
+package toy.chess.given.input;
 
 public class UserInputException extends Exception {
     public UserInputException(String reason) {

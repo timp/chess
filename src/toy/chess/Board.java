@@ -1,7 +1,4 @@
-package com.megabuyte;
-
-import static com.megabuyte.Owner.BLACK;
-import static com.megabuyte.Owner.WHITE;
+package toy.chess;
 
 /**
  * @author timp
@@ -16,19 +13,19 @@ public class Board {
   // TODO it is not nice using arrays. Use rank (1-8) and file (A-H)
   public Board() {
     // First square is black
-    positions[0][0] = new Position(0, 0, new Rook(BLACK));
-    positions[1][0] = new Position(0, 1, new Knight(BLACK));
-    positions[2][0] = new Position(0, 2, new Bishop(BLACK));
+    positions[0][0] = new Position(0, 0, new Rook(Owner.BLACK));
+    positions[1][0] = new Position(0, 1, new Knight(Owner.BLACK));
+    positions[2][0] = new Position(0, 2, new Bishop(Owner.BLACK));
     // King on the opposite of his queen's colour
-    positions[3][0] = new Position(0, 3, new King(BLACK));
-    positions[4][0] = new Position(0, 4, new Queen(BLACK));
-    positions[5][0] = new Position(0, 5, new Bishop(BLACK));
-    positions[6][0] = new Position(0, 6, new Knight(BLACK));
-    positions[7][0] = new Position(0, 7, new Rook(BLACK));
+    positions[3][0] = new Position(0, 3, new King(Owner.BLACK));
+    positions[4][0] = new Position(0, 4, new Queen(Owner.BLACK));
+    positions[5][0] = new Position(0, 5, new Bishop(Owner.BLACK));
+    positions[6][0] = new Position(0, 6, new Knight(Owner.BLACK));
+    positions[7][0] = new Position(0, 7, new Rook(Owner.BLACK));
 
 
     for (int y = 0; y < 8; y++) {
-      positions[y][1] = new Position(1, y, new Pawn(BLACK));
+      positions[y][1] = new Position(1, y, new Pawn(Owner.BLACK));
     }
 
     for (int x = 2; x < 6; x++) {
@@ -38,18 +35,18 @@ public class Board {
     }
 
     for (int y = 0; y < 8; y++) {
-      positions[y][6] = new Position(6, y, new Pawn(WHITE));
+      positions[y][6] = new Position(6, y, new Pawn(Owner.WHITE));
     }
 
-    positions[0][7] = new Position(7, 0, new Rook(WHITE));
-    positions[1][7] = new Position(7, 1, new Knight(WHITE));
-    positions[2][7] = new Position(7, 2, new Bishop(WHITE));
+    positions[0][7] = new Position(7, 0, new Rook(Owner.WHITE));
+    positions[1][7] = new Position(7, 1, new Knight(Owner.WHITE));
+    positions[2][7] = new Position(7, 2, new Bishop(Owner.WHITE));
     // King on the opposite of his queen's colour
-    positions[3][7] = new Position(7, 3, new Queen(WHITE));
-    positions[4][7] = new Position(7, 4, new King(WHITE));
-    positions[5][7] = new Position(7, 5, new Bishop(WHITE));
-    positions[6][7] = new Position(7, 6, new Knight(WHITE));
-    positions[7][7] = new Position(7, 7, new Rook(WHITE));
+    positions[3][7] = new Position(7, 3, new Queen(Owner.WHITE));
+    positions[4][7] = new Position(7, 4, new King(Owner.WHITE));
+    positions[5][7] = new Position(7, 5, new Bishop(Owner.WHITE));
+    positions[6][7] = new Position(7, 6, new Knight(Owner.WHITE));
+    positions[7][7] = new Position(7, 7, new Rook(Owner.WHITE));
   }
   
   public String toString() {
