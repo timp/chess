@@ -7,11 +7,11 @@
 package toy.chess.given.input;
 
 public class UserInputException extends Exception {
-    public UserInputException(String reason) {
-        super(reason);
-    }
+  public UserInputException(String reason) {
+    super(reason);
+  }
 
-    public UserInputException(Throwable e) {
-        super(e);
-    }
+  public UserInputException(Throwable e) {
+    super(e);
+  }
 }

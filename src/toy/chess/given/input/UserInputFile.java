@@ -20,6 +20,7 @@ public class UserInputFile implements UserInput {
     this.m_input = new BufferedReader(new FileReader(this.m_filename));
   }
 
+  @Override
   public boolean nextMove(int[] from, int[] to) throws UserInputException {
     try {
       String e = this.m_input.readLine();

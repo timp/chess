@@ -25,7 +25,7 @@ or if any part of  these instructions are unclear.
 ## Problem Definition
 
 You have been asked to write a computer program to allow two human players
-to play chess1.
+to play chess.
 If you are not familiar with the rules of chess please ask your test
 administrator!
 
@@ -35,25 +35,6 @@ of each player is provided :-
 ```java
 public interface UserInput {
 /**
-This method obtains the next move from the next player and populates 
-the from[] and to[] arrays accordingly.  
-These arrays should be of length at least 2.
-
-On exit, from[0] and from[1] store the x and y co-ordinate respectively 
-of the piece to be moved.
-
-Similarly, to[0] and to[1] store the x and y co-ordinate respectively of 
-the destination location.
-
-The x, y co-ordinates are in the range 0,0 (bottom left) to 7,7 (top right).  
-The same co-ordinate system is used for both players.
-
-The first time this function is called it returns the move for player 1 
-(whose  pieces occupy the positions 0,0 to 7,1).  
-It then returns moves for alternating players.
-
-This function returns false when there are no more moves.  
-Otherwise, it returns true.
 	*/
 
 	public boolean nextMove(int[]from, int[]to) throws UserInputException;

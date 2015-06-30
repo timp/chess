@@ -16,7 +16,7 @@ public class BoardTest extends TestCase {
   public void testValidateNoPeice() {
     Board it = new Board();
     try {
-      it.validate(new Position(3, 3), new Position(4, 4));
+      it.validate(new Position(new Square(3, 3)), new Position(new Square(4, 4)));
       fail("Should have bombed");
     } catch (InvalidMoveException e) {
       e = null;
@@ -30,12 +30,15 @@ public class BoardTest extends TestCase {
   public void testNothingOnPathBishop() {
 
   }
+
   public void testNothingOnPathRook() {
 
   }
+
   public void testNothingOnPathQueen() {
 
   }
+
   public void testNothingOnPathPawn() {
 
   }

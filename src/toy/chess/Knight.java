@@ -14,7 +14,7 @@ public class Knight extends Piece {
   public String getName() {
     return "Knight";
   }
-  
+
   @Override
   public String getAbbreviation() {
     return getOwner() == Owner.BLACK ? "K" : "k";

@@ -1,6 +1,7 @@
 package toy.chess;
 
 import static toy.chess.Owner.BLACK;
+
 /**
  * @author timp
  * @since 2015/06/29

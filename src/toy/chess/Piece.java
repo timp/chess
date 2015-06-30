@@ -4,7 +4,7 @@ package toy.chess;
  * @author timp
  * @since 2015/06/29
  */
-public abstract class  Piece {
+public abstract class Piece {
   Owner owner = null;
 
   public Piece(Owner owner) {
@@ -17,7 +17,9 @@ public abstract class  Piece {
 
   public abstract String getName();
 
-  /** Black pieces are uppercase, white lowercase */
+  /**
+   * Black pieces are uppercase, white lowercase
+   */
   public abstract String getAbbreviation();
 
   public abstract void validate(Position from, Position to);
