@@ -33,8 +33,7 @@ An implementation of the following interface which gives the next move
 of each player is provided :-
 
 ```java
-public interface UserInput
-{
+public interface UserInput {
 /**
 This method obtains the next move from the next player and populates 
 the from[] and to[] arrays accordingly.  

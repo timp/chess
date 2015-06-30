@@ -2,9 +2,9 @@ package toy.chess;
 
 import junit.framework.TestCase;
 
-
 /**
- * Created by progtest on 29/06/2015.
+ * @author timp
+ * @since 2015/06/29
  */
 public class BoardTest extends TestCase {
 
