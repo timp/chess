@@ -15,9 +15,10 @@ public class Knight extends Piece {
     return "Knight";
   }
 
+  /** See https://en.wikipedia.org/wiki/Descriptive_notation  */
   @Override
   public String getAbbreviation() {
-    return getOwner() == Player.BLACK ? "K" : "k";
+    return getOwner() == Player.BLACK ? "N" : "n";
   }
 
   @Override

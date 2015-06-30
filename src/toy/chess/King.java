@@ -12,12 +12,12 @@ public class King extends Piece {
 
   @Override
   public String getName() {
-    return "Pawn";
+    return "King";
   }
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == Player.BLACK ? "P" : "p";
+    return getOwner() == Player.BLACK ? "K" : "k";
   }
 
   @Override

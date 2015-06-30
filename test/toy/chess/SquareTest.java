@@ -7,8 +7,8 @@ import junit.framework.TestCase;
  * @since 2015-06-30.
  */
 public class SquareTest extends TestCase {
-  public void testCoods() {
-    Square it = new Square(1,1);
+  public void testSquare() {
+    Square it = new Square("b2");
     assertEquals("B2", it.toString());
   }
 }

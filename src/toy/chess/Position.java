@@ -33,7 +33,7 @@ public class Position {
     return square.toString() + (piece == null ? " " : piece.getName());
   }
 
-  public String toSquare() {
+  public String pic() {
     return piece == null ? " " : piece.getAbbreviation();
   }
 

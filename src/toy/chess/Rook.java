@@ -24,7 +24,10 @@ public class Rook extends Piece {
 
   @Override
   public void validate(Position from, Position to) {
-
+    if (!(from.getSquare().x() == to.getSquare().x() ||
+        from.getSquare().y() == to.getSquare().y()))
+      throw new InvalidMoveException(
+          "A " + getName() +  " may only move in straight lines");
   }
 
 

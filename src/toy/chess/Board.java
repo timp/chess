@@ -38,19 +38,24 @@ public class Board {
 
     for (int x = 0; x < 8; x++) {
       positions[x][6] = new Position(
-          new Square("g" + File.names()[x]), new Pawn(Player.WHITE));
+          new Square("g" + File.names()[x]), new Pawn(Player.BLACK));
     }
 
-    positions[0][7] = new Position(new Square("h1"), new Rook(Player.WHITE));
-    positions[1][7] = new Position(new Square("h2"), new Knight(Player.WHITE));
-    positions[2][7] = new Position(new Square("h3"), new Bishop(Player.WHITE));
-    // King on the opposite of his queen's colour
-    positions[3][7] = new Position(new Square("h4"), new King(Player.WHITE));
+    // white
+    positions[0][7] = new Position(new Square("h1"), new Rook(Player.BLACK));
+    // black
+    positions[1][7] = new Position(new Square("h2"), new Knight(Player.BLACK));
+    // white
+    positions[2][7] = new Position(new Square("h3"), new Bishop(Player.BLACK));
+    // black
     // queen on her own colour
-    positions[4][7] = new Position(new Square("h5"), new Queen(Player.WHITE));
-    positions[5][7] = new Position(new Square("h6"), new Bishop(Player.WHITE));
-    positions[6][7] = new Position(new Square("h7"), new Knight(Player.WHITE));
-    positions[7][7] = new Position(new Square("h8"), new Rook(Player.WHITE));
+    positions[3][7] = new Position(new Square("h4"), new Queen(Player.BLACK));
+    // King on the opposite of his queen's colour
+    // white
+    positions[4][7] = new Position(new Square("h5"), new King(Player.BLACK));
+    positions[5][7] = new Position(new Square("h6"), new Bishop(Player.BLACK));
+    positions[6][7] = new Position(new Square("h7"), new Knight(Player.BLACK));
+    positions[7][7] = new Position(new Square("h8"), new Rook(Player.BLACK));
   }
 
   /** Note that a1 is in the top left, not bottom left */
@@ -63,7 +68,7 @@ public class Board {
     for (int y = 0; y < 8; y++) {
       it.append('|');
       for (int x = 0; x < 8; x++) {
-        it.append(positions[x][y].toSquare());
+        it.append(positions[x][y].pic());
       }
       it.append('|');
       it.append("\n");
@@ -97,6 +102,10 @@ public class Board {
     to.setPiece(from.getPiece());
     from.setPiece(null);
     return this;
+  }
+
+  public Board m(String moveCode) {
+    return move(new MoveCode(moveCode));
   }
 
   public Board move(MoveCode fromTo) {
