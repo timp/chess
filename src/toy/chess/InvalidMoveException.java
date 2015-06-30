@@ -1,6 +1,6 @@
 package toy.chess;
 
-public class InvalidMoveException extends RuntimeException {
+public abstract class InvalidMoveException extends RuntimeException {
   public InvalidMoveException(String message) {
     super(message);
   }

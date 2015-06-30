@@ -32,7 +32,7 @@ public class Board {
     for (int y = 2; y < 6; y++) {
       for (int x = 0; x < 8; x++) {
         positions[x][y] = new Position(
-            new Square(Rank.names()[x] + File.names()[y]));
+            new Square(Rank.names()[y] + File.names()[x]));
       }
     }
 
@@ -92,6 +92,17 @@ public class Board {
     return pic;
   }
 
+  public String names() {
+    String pic = "";
+    for (int y = 0; y < 8; y++) {
+      for (int x = 0; x < 8; x++) {
+        pic += positions[x][y].getSquare().toString();
+      }
+      pic += "\n";
+    }
+    return pic;
+  }
+
   public Board move(int[] fromCoords, int[] toCoords) {
     Position from = positions[fromCoords[0]][fromCoords[1]];
     Position to = positions[toCoords[0]][toCoords[1]];
@@ -122,15 +133,21 @@ public class Board {
   }
   public Path validate(Position current, Position candidate) {
     if (current.getPiece() == null)
-      throw new InvalidMoveException("No piece to move at " + current);
+      throw new NoPieceAtPositionException("No piece to move at " + current);
 
     if (candidate.getPiece() != null && (candidate.getPiece().getOwner() == current.getPiece().getOwner())) {
-      throw new InvalidMoveException("Player already occupies " + candidate);
+      throw new PositionOccupiedBySelfException("Player already occupies " + candidate);
     }
+
+    current.getPiece().validate(current, candidate);
     // TODO return path
 
     return new Path();
   }
 
 
+  public Position getPosition(String squareName) {
+    Square s = new Square(squareName);
+    return positions[s.x()][s.y()];
+  }
 }
