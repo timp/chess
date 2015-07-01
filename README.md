@@ -1,7 +1,4 @@
-# chess
-## A Java Programming Toy
-### A chess move validator
-
+# Chess move validator
 
 This exercise was set as an interview test, with a time limit of four hours.
 It has taken considerably more. 
