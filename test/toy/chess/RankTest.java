@@ -15,4 +15,11 @@ public class RankTest extends TestCase {
     assertEquals(2, Rank.THREE.getCoord());
   }
 
+  public void testNonExistentFile() {
+    try {
+      Rank.byName("i");
+      fail("Should have bombed");
+    } catch (IllegalArgumentException e) { }
+  }
+
 }

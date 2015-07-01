@@ -19,7 +19,7 @@ public class Rook extends Piece {
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == BLACK ? "R" : "r";
+    return getPlayer() == BLACK ? "R" : "r";
   }
 
   @Override

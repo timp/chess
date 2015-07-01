@@ -13,21 +13,21 @@ public class RookTest extends TestCase {
     try {
       it.m("a1b2");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) {
-      e = null;
-    }
+    } catch (InvalidPieceMoveException e) { }
     it.m("a1a3").m("h5h4").m("a3b3");
     assertEquals(
-            "+--------+\n" +
-            "| nbqkbnr|\n" +
-            "|  pppppp|\n" +
-            "| r      |\n" +
-            "|pp     P|\n" +
-            "|        |\n" +
-            "|        |\n" +
-            "|PPPPPPP |\n" +
-            "|RNBQKBNR|\n" +
-            "+--------+\n", it.toString());
+                    "  abcdefgh  \n" +
+                    " +--------+ \n" +
+                    "8|RNBQKBNR|8\n" +
+                    "7|PPPPPPP |7\n" +
+                    "6|        |6\n" +
+                    "5|        |5\n" +
+                    "4|pp     P|4\n" +
+                    "3| r      |3\n" +
+                    "2|  pppppp|2\n" +
+                    "1| nbqkbnr|1\n" +
+                    " +--------+ \n" +
+                    "  abcdefgh  \n", it.toString());
   }
 
   public void testCannotMoveOntoOwnPiece() {
@@ -36,21 +36,20 @@ public class RookTest extends TestCase {
     try {
       it.m("a1a4");
       fail("Should have bombed");
-    } catch (PositionOccupiedBySelfException e) {
-      e = null;
-    }
+    } catch (PositionOccupiedBySelfException e) { }
     it.m("a1a3").m("h6h5").m("a3b3");
     assertEquals(
-            "+--------+\n" +
-            "| nbqkbnr|\n" +
-            "| ppppppp|\n" +
-            "| r      |\n" +
-            "|p       |\n" +
-            "|       P|\n" +
-            "|        |\n" +
-            "|PPPPPPP |\n" +
-            "|RNBQKBNR|\n" +
-            "+--------+\n", it.toString());
-
+                    "  abcdefgh  \n" +
+                    " +--------+ \n" +
+                    "8|RNBQKBNR|8\n" +
+                    "7|PPPPPPP |7\n" +
+                    "6|        |6\n" +
+                    "5|       P|5\n" +
+                    "4|p       |4\n" +
+                    "3| r      |3\n" +
+                    "2| ppppppp|2\n" +
+                    "1| nbqkbnr|1\n" +
+                    " +--------+ \n" +
+                    "  abcdefgh  \n", it.toString());
   }
 }

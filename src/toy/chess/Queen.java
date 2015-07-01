@@ -19,11 +19,24 @@ public class Queen extends Piece {
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == BLACK ? "Q" : "q";
+    return getPlayer() == BLACK ? "Q" : "q";
   }
 
+  /** Any unobstructed horizontal, vertical or diagonal move of any length.*/
   @Override
   public void validate(Position from, Position to) {
+    if ((
+        Math.abs(to.getSquare().x() - from.getSquare().x())
+            == Math.abs(to.getSquare().y() - from.getSquare().y()))
+        ) {
+      return;
+    }
+    if ((from.getSquare().x() == to.getSquare().x() ||
+        from.getSquare().y() == to.getSquare().y())) {
+      return;
+    }
+    throw new InvalidPieceMoveException(
+        "A " + getName() + " must move diagonally or in straight lines");
 
   }
 

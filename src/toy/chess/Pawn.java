@@ -19,19 +19,19 @@ public class Pawn extends Piece {
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == BLACK ? "P" : "p";
+    return getPlayer() == BLACK ? "P" : "p";
   }
 
   @Override
   public void validate(Position from, Position to) {
     int distance = (to.getSquare().y() - from.getSquare().y())
-        * from.getPiece().getOwner().direction;
+        * from.getPiece().getPlayer().direction;
     if (distance == 2) {
       if (!((from.getSquare().rank == Rank.TWO
-          && from.getPiece().getOwner() == Player.WHITE)
+          && from.getPiece().getPlayer() == Player.WHITE)
           ||
           (from.getSquare().rank == Rank.SEVEN
-              && from.getPiece().getOwner() == Player.BLACK))) {
+              && from.getPiece().getPlayer() == Player.BLACK))) {
         throw new InvalidPieceMoveException(
             "A " + getName() + " may only move one square forward once moved");
       }

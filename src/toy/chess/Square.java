@@ -11,6 +11,13 @@ public class Square {
   Rank rank;
   File file;
 
+  public Square(int x, int y) {
+    assertValid(x);
+    assertValid(y);
+    this.rank = Rank.byIndex(y);
+    this.file = File.byIndex(x);
+  }
+
   public Square(String squareCode) {
     this(new SquareCode(squareCode));
   }
@@ -18,6 +25,12 @@ public class Square {
   public Square(SquareCode squareCode) {
     this.rank = Rank.byName(squareCode.rank());
     this.file = File.byName(squareCode.file());
+  }
+
+  private boolean assertValid(int coord) {
+    if (coord < 0 || coord > 7)
+      throw new InvalidChessCoordinateException(coord);
+    return true;
   }
 
   public String toString() {
@@ -37,5 +50,24 @@ public class Square {
     } else {
       return " ";
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Square square = (Square) o;
+
+    if (rank != square.rank) return false;
+    return file == square.file;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = rank.ordinal();
+    result = 31 * result + file.ordinal();
+    return result;
   }
 }

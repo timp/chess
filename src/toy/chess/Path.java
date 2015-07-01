@@ -10,9 +10,11 @@ public class Path {
     return positions.size();
   }
 
+
+  /*
   public void add(Position p) {
     positions.add(p);
   }
-
+    */
 
 }

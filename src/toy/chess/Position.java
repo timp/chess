@@ -8,7 +8,6 @@ package toy.chess;
  */
 public class Position {
 
-
   Square square = null;
   Piece piece = null;
 
@@ -21,23 +20,18 @@ public class Position {
     this.piece = piece;
   }
 
-
   public Piece getPiece() {
     return piece;
   }
   public void setPiece(Piece piece) {
     this.piece = piece;
   }
-
   public String toString() {
-    return square.toString() + (piece == null ? " " : piece.getName());
+    return square.toString() + " " + (piece == null ? " " : piece.getName());
   }
-
   public String pic() {
     return piece == null ? " " : piece.getAbbreviation();
   }
-
-
   public Square getSquare() {
     return square;
   }

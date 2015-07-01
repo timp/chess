@@ -11,7 +11,7 @@ public abstract class Piece {
     this.owner = owner;
   }
 
-  public Player getOwner() {
+  public Player getPlayer() {
     return this.owner;
   }
 
@@ -25,4 +25,5 @@ public abstract class Piece {
   public abstract void validate(Position from, Position to);
 
 }
+
 

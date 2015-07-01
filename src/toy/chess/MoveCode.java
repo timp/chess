@@ -20,16 +20,4 @@ public class MoveCode {
   public SquareCode to() {
     return new SquareCode(code.substring(2));
   }
-  public SquareCode fromRank() {
-    return new SquareCode(code.substring(0,1));
-  }
-  public SquareCode fromFile() {
-    return new SquareCode(code.substring(1,0));
-  }
-  public SquareCode toRank() {
-    return new SquareCode(code.substring(2,3));
-  }
-  public SquareCode toFile() {
-    return new SquareCode(code.substring(3,4));
-  }
 }

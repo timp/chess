@@ -17,5 +17,6 @@ public class SquareCode {
   public String rank() {
     return code.substring(1);
   }
+  public String toString() { return code; }
 
 }

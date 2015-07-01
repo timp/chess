@@ -16,7 +16,9 @@ public class GameTest extends TestCase {
       Game.main(new String[]{"data/sample-moves-invalid.txt"});
       fail("Should have bombed");
     } catch (CodeLineException e) {
-      assertTrue(e.getCause() instanceof NoPieceAtPositionException);
+      assertTrue(e.toString().contains("data/sample-moves-invalid.txt:3"));
+      assertTrue(e.getCause().toString(),
+          e.getCause() instanceof InvalidPieceMoveException);
     }
   }
 

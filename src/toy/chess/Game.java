@@ -42,19 +42,21 @@ public class Game {
       while (true) {
         MoveCode mc = nextMove();
 
-        System.out.println("Player " + player +
-            ": move from " + mc.from() +
-            " to " + mc.to() );
-        if (player.equals("1")) {
-          player = "2";
-        } else {
-          player = "1";
-        }
         try {
           board.move(mc);
         } catch (InvalidMoveException e) {
           throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
         }
+        System.out.print("Player " + player + " (");
+        if (player.equals("1")) {
+          System.out.print(board.getPlayer1());
+          player = "2";
+        } else {
+          System.out.print(board.getPlayer2());
+          player = "1";
+        }
+        System.out.println(") : move from " + mc.from() +
+            " to " + mc.to());
         System.out.println(board.toString());
       }
     } catch (NoMoreMovesException eof) {
@@ -64,8 +66,7 @@ public class Game {
   }
   public static void main(String[] args) throws IOException {
     System.out.println("Playing game from file " + args[0]);
-    Game game = new Game(args[0]);
-    game.play();
+    new Game(args[0]).play();
   }
 
 }

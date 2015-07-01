@@ -18,14 +18,15 @@ public class Bishop extends Piece {
 
   @Override
   public String getAbbreviation() {
-    return getOwner() == Player.BLACK ? "B" : "b";
+    return getPlayer() == Player.BLACK ? "B" : "b";
   }
 
   @Override
   public void validate(Position from, Position to) {
     if (!(
         Math.abs(to.getSquare().x() - from.getSquare().x())
-            == Math.abs(to.getSquare().y() - from.getSquare().y()))) {
+            == Math.abs(to.getSquare().y() - from.getSquare().y()))
+    ) {
       throw new InvalidPieceMoveException(
           "A " + getName() + " must move diagonally");
     }

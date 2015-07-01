@@ -11,16 +11,18 @@ public class BoardTest extends TestCase {
   public void testToString() {
     Board it = new Board();
     assertEquals(
-        "+--------+\n" +
-        "|rnbqkbnr|\n" +
-        "|pppppppp|\n" +
-        "|        |\n" +
-        "|        |\n" +
-        "|        |\n" +
-        "|        |\n" +
-        "|PPPPPPPP|\n" +
-        "|RNBQKBNR|\n" +
-        "+--------+\n",it.toString());
+                "  abcdefgh  \n" +
+                " +--------+ \n" +
+                "8|RNBQKBNR|8\n" +
+                "7|PPPPPPPP|7\n" +
+                "6|        |6\n" +
+                "5|        |5\n" +
+                "4|        |4\n" +
+                "3|        |3\n" +
+                "2|pppppppp|2\n" +
+                "1|rnbqkbnr|1\n" +
+                " +--------+ \n" +
+                "  abcdefgh  \n",it.toString());
   }
 
   public void testValidateNoPieceOnSquareFrom() {
@@ -28,9 +30,7 @@ public class BoardTest extends TestCase {
     try {
       it.validate(new Position(new Square("d4")), new Position(new Square("e5")));
       fail("Should have bombed");
-    } catch (InvalidMoveException e) {
-      e = null;
-    }
+    } catch (NoPieceAtPositionException e) { }
   }
 
   public void testValidateOntopOfOwn() {
@@ -39,9 +39,7 @@ public class BoardTest extends TestCase {
     try {
       it.m("a1a3");
       fail("Should have bombed");
-    } catch (PositionOccupiedBySelfException e) {
-      e = null;
-    }
+    } catch (PositionOccupiedBySelfException e) {  }
   }
 
   public void testValidateMoveToDifferentSquare() {
@@ -49,9 +47,7 @@ public class BoardTest extends TestCase {
     try {
       it.m("a2a2");
       fail("Should have bombed");
-    } catch (PositionOccupiedBySelfException e) {
-      e = null;
-    }
+    } catch (PositionOccupiedBySelfException e) { }
   }
 
   public void testNames() {

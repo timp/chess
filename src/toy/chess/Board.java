@@ -8,6 +8,26 @@ public class Board {
 
   private Position[][] positions = new Position[8][8];
 
+
+  private Player player1;
+  private Player player2;
+
+  public Player getPlayer1() {
+    return player1;
+  }
+
+  public void setPlayer1(Player player1) {
+    this.player1 = player1;
+  }
+
+  public Player getPlayer2() {
+    return player2;
+  }
+
+  public void setPlayer2(Player player2) {
+    this.player2 = player2;
+  }
+
   public Board() {
     // First square (a1 or 0,0) must be black and occupied by White
     positions[0][0] = new Position(new Square("a1"), new Rook(Player.WHITE));
@@ -58,25 +78,23 @@ public class Board {
     positions[7][7] = new Position(new Square("h8"), new Rook(Player.BLACK));
   }
 
-  /** Note that a1 is in the top left, not bottom left */
+  /** Note that we need to flip the matrix to get normal chess notation. */
   public String toString() {
     StringBuilder it = new StringBuilder();
-    it.append('+');
-    it.append("--------");
-    it.append('+');
-    it.append("\n");
-    for (int y = 0; y < 8; y++) {
+    it.append("  abcdefgh  \n");
+    it.append(" +--------+ \n");
+    for (int y = 7; y > -1; y--) {
+      it.append(y+1);
       it.append('|');
       for (int x = 0; x < 8; x++) {
         it.append(positions[x][y].pic());
       }
       it.append('|');
+      it.append(y+1);
       it.append("\n");
     }
-    it.append('+');
-    it.append("--------");
-    it.append('+');
-    it.append("\n");
+    it.append(" +--------+ \n");
+    it.append("  abcdefgh  \n");
     return it.toString();
   }
 
@@ -113,21 +131,29 @@ public class Board {
 
     Position from = positions[fromSquare.x()][fromSquare.y()];
     Position to = positions[toSquare.x()][toSquare.y()];
+    if (player1 == null) {
+      player1 = from.getPiece().getPlayer();
+    } else {
+      if (player2 == null) {
+        player2 = from.getPiece().getPlayer();
+      }
+    }
 
     // TODO Validate path
-    validate(from,to);
+    validate(from, to);
     // TODO Queening
+
     to.setPiece(from.getPiece());
     from.setPiece(null);
-
     return this;
   }
   public Path validate(Position current, Position candidate) {
     if (current.getPiece() == null)
       throw new NoPieceAtPositionException("No piece to move at " + current);
 
-    if (candidate.getPiece() != null && (candidate.getPiece().getOwner() == current.getPiece().getOwner())) {
-      throw new PositionOccupiedBySelfException("Player already occupies " + candidate);
+    if (candidate.getPiece() != null && (candidate.getPiece().getPlayer() == current.getPiece().getPlayer())) {
+      throw new PositionOccupiedBySelfException(
+          "Player already occupies " + candidate);
     }
 
 
