@@ -14,11 +14,6 @@ public enum File {
     this.coord = yCoord;
   }
 
-  /** Exploiting the zero based index/coordinate coincidence. */
-  public static File byIndex(int coord) {
-    return values()[coord];
-  }
-
   public static File byName(String name) {
     return valueOf(name.toUpperCase());
   }

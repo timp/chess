@@ -44,6 +44,16 @@ public class BoardTest extends TestCase {
     }
   }
 
+  public void testValidateMoveToDifferentSquare() {
+    Board it = new Board();
+    try {
+      it.m("a2a2");
+      fail("Should have bombed");
+    } catch (PositionOccupiedBySelfException e) {
+      e = null;
+    }
+  }
+
   public void testNames() {
     Board it = new Board();
     assertEquals(
@@ -83,5 +93,28 @@ public class BoardTest extends TestCase {
         " # # # #\n" +
         "# # # # \n" +
         " # # # #\n", new Board().pic());
+  }
+
+  public void testPieceNames() {
+    Board it = new Board();
+    assertEquals("Rook", it.getPosition("a1").getPiece().getName());
+    assertEquals("Knight", it.getPosition("b1").getPiece().getName());
+    assertEquals("Bishop", it.getPosition("c1").getPiece().getName());
+    assertEquals("Queen", it.getPosition("d1").getPiece().getName());
+    assertEquals("King", it.getPosition("e1").getPiece().getName());
+    assertEquals("Bishop", it.getPosition("f1").getPiece().getName());
+    assertEquals("Knight", it.getPosition("g1").getPiece().getName());
+    assertEquals("Rook", it.getPosition("h1").getPiece().getName());
+
+    assertEquals("Pawn", it.getPosition("c2").getPiece().getName());
+
+    assertEquals("Rook", it.getPosition("a8").getPiece().getName());
+    assertEquals("Knight", it.getPosition("b8").getPiece().getName());
+    assertEquals("Bishop", it.getPosition("c8").getPiece().getName());
+    assertEquals("Queen", it.getPosition("d8").getPiece().getName());
+    assertEquals("King", it.getPosition("e8").getPiece().getName());
+    assertEquals("Bishop", it.getPosition("f8").getPiece().getName());
+    assertEquals("Knight", it.getPosition("g8").getPiece().getName());
+    assertEquals("Rook", it.getPosition("h8").getPiece().getName());
   }
 }

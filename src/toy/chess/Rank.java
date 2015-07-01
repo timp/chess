@@ -20,10 +20,6 @@ public enum Rank {
     this.coord = xCoord;
   }
 
-  /** Exploiting the zero based index/coordinate coincidence. */
-  public static Rank byIndex(int coord) {
-    return values()[coord];
-  }
   public static Rank byName(String name) {
     for (Rank v : values()) {
       if (String.valueOf(v.coord + 1).equals(name)) {

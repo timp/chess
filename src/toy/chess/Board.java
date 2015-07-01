@@ -103,18 +103,6 @@ public class Board {
     return pic;
   }
 
-  public Board move(int[] fromCoords, int[] toCoords) {
-    Position from = positions[fromCoords[0]][fromCoords[1]];
-    Position to = positions[toCoords[0]][toCoords[1]];
-    Path path = validate(from, to);
-
-    // TODO Validate path
-
-    to.setPiece(from.getPiece());
-    from.setPiece(null);
-    return this;
-  }
-
   public Board m(String moveCode) {
     return move(new MoveCode(moveCode));
   }
@@ -126,8 +114,9 @@ public class Board {
     Position from = positions[fromSquare.x()][fromSquare.y()];
     Position to = positions[toSquare.x()][toSquare.y()];
 
+    // TODO Validate path
     validate(from,to);
-
+    // TODO Queening
     to.setPiece(from.getPiece());
     from.setPiece(null);
 
@@ -140,6 +129,7 @@ public class Board {
     if (candidate.getPiece() != null && (candidate.getPiece().getOwner() == current.getPiece().getOwner())) {
       throw new PositionOccupiedBySelfException("Player already occupies " + candidate);
     }
+
 
     current.getPiece().validate(current, candidate);
 

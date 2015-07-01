@@ -8,7 +8,4 @@ public class CodeFormatException extends RuntimeException {
   public CodeFormatException(String message) {
     super(message);
   }
-  public CodeFormatException(String message, Exception cause) {
-    super(message, cause);
-  }
 }

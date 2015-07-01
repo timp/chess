@@ -11,8 +11,7 @@ public class RookTest extends TestCase {
     Board it = new Board();
     it.m("a2a4").m("h7h6").m("b2b4").m("h6h5");
     try {
-      it.validate(it.getPosition("a1"),
-          it.getPosition("b2"));
+      it.m("a1b2");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {
       e = null;
