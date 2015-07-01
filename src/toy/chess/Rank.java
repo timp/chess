@@ -1,34 +1,47 @@
 package toy.chess;
 
 /**
- * Rows in a chess board..
+ * Rows in a chess board.
  */
 public enum Rank {
-  A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
+  ONE(0),
+  TWO(1),
+  THREE(2),
+  FOUR(3),
+  FIVE(4),
+  SIX(5),
+  SEVEN(6),
+  EIGHT(7);
 
-  private int coord;
+  int coord;
+  private static String[] names = "12345678".split("");
 
-  private static String[] names = "abcdefgh".split("");
-
-  Rank(int yCoord) {
-    this.coord = yCoord;
+  Rank(int xCoord) {
+    this.coord = xCoord;
   }
 
   /** Exploiting the zero based index/coordinate coincidence. */
   public static Rank byIndex(int coord) {
     return values()[coord];
   }
-
   public static Rank byName(String name) {
-    return valueOf(name.toUpperCase());
+    for (Rank v : values()) {
+      if (String.valueOf(v.coord + 1).equals(name)) {
+        return v;
+      }
+    }
+    throw new IllegalArgumentException("No File named '" + name + "'");
   }
 
   public static String[] names() {
     return names;
   }
 
+  public String toString() {
+    return String.valueOf(this.coord + 1);
+  }
+
   public int getCoord() {
     return coord;
   }
-
 }

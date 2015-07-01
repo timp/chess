@@ -13,8 +13,8 @@ public class PawnTest extends TestCase {
       it.validate(new Position(new Square("b1")),
           new Position(new Square("b2")));
       fail("Should have bombed");
-    } catch (InvalidMoveException e) {
-      e.printStackTrace();
+    } catch (NoPieceAtPositionException e) {
+      e = null;
     }
   }
 

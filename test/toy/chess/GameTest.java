@@ -12,11 +12,24 @@ public class GameTest extends TestCase {
   }
 
   public void testInvalidMoves() throws Exception {
-    Game.main(new String[]{"data/sample-moves-invalid.txt"});
+    try {
+      Game.main(new String[]{"data/sample-moves-invalid.txt"});
+      fail("Should have bombed");
+    } catch (CodeLineException e) {
+      assertTrue(e.getCause() instanceof NoPieceAtPositionException);
+    }
   }
 
   public void testQuickCheckmateMoves() throws Exception {
     Game.main(new String[]{"data/quick-checkmate.txt"});
   }
 
+  public void testInvalidCode() throws Exception {
+    try {
+      Game.main(new String[]{"data/invalidCode.txt"});
+      fail("Should have bombed");
+    } catch (CodeLineException e) {
+      assertTrue(e.getCause() instanceof CodeFormatException);
+    }
+  }
 }

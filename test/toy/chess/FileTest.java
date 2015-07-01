@@ -9,11 +9,11 @@ import junit.framework.TestCase;
 public class FileTest extends TestCase {
 
   public void testToString() {
-    assertEquals("5", File.FIVE.toString());
+    assertEquals("A", File.A.toString());
   }
 
   public void testGetCoord() {
-    assertEquals(4, File.FIVE.getCoord());
+    assertEquals(5, File.F.getCoord());
   }
 
 }

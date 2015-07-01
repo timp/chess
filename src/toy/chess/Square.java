@@ -11,13 +11,6 @@ public class Square {
   Rank rank;
   File file;
 
-  public Square(int x, int y) {
-    assertValid(x);
-    assertValid(y);
-    this.rank = Rank.byIndex(y);
-    this.file = File.byIndex(x);
-  }
-
   public Square(String squareCode) {
     this(new SquareCode(squareCode));
   }
@@ -27,14 +20,8 @@ public class Square {
     this.file = File.byName(squareCode.file());
   }
 
-  private boolean assertValid(int coord) {
-    if (coord < 0 || coord > 7)
-      throw new InvalidChessCoordinate(coord);
-    return true;
-  }
-
   public String toString() {
-    return this.rank.toString() + this.file.toString();
+    return  this.file.toString() + this.rank.toString();
   }
 
   public int x() {

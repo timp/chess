@@ -29,24 +29,18 @@ public class Game {
       try {
         return new MoveCode(code);
       } catch (CodeFormatException e) {
-        throw new CodeFormatException(this.fileName + ":" + this.lineNumber, e);
+        throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
       }
     }
   }
 
-
-  public static void main(String[] args) throws IOException {
-
+  public void play() throws IOException {
     Board board = new Board();
-
-    System.out.println("Playing game from file " + args[0]);
-    Game moves = new Game(args[0]);
-
     //TODO Use Player
     String player = "1";
     try {
       while (true) {
-        MoveCode mc = moves.nextMove();
+        MoveCode mc = nextMove();
 
         System.out.println("Player " + player +
             ": move from " + mc.from() +
@@ -56,14 +50,22 @@ public class Game {
         } else {
           player = "1";
         }
-        board.move(mc);
+        try {
+          board.move(mc);
+        } catch (InvalidMoveException e) {
+          throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
+        }
         System.out.println(board.toString());
       }
     } catch (NoMoreMovesException eof) {
       System.out.println("Game over");
     }
 
-
+  }
+  public static void main(String[] args) throws IOException {
+    System.out.println("Playing game from file " + args[0]);
+    Game game = new Game(args[0]);
+    game.play();
   }
 
 }

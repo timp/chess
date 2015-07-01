@@ -13,10 +13,8 @@ public class SquareCode {
     }
     this.code = code;
   }
+  public String file() { return code.substring(0,1); }
   public String rank() {
-    return code.substring(0,1);
-  }
-  public String file() {
     return code.substring(1);
   }
 

@@ -8,11 +8,11 @@ import junit.framework.TestCase;
  */
 public class RankTest extends TestCase {
   public void testRankToString() {
-    assertEquals("A", Rank.A.toString());
+    assertEquals("1", Rank.ONE.toString());
   }
 
   public void testGetCoord() {
-    assertEquals(2, Rank.C.getCoord());
+    assertEquals(2, Rank.THREE.getCoord());
   }
 
 }

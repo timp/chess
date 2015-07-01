@@ -12,49 +12,49 @@ public class Board {
     // First square (a1 or 0,0) must be black and occupied by White
     positions[0][0] = new Position(new Square("a1"), new Rook(Player.WHITE));
     // white
-    positions[1][0] = new Position(new Square("a2"), new Knight(Player.WHITE));
+    positions[1][0] = new Position(new Square("b1"), new Knight(Player.WHITE));
     // black
-    positions[2][0] = new Position(new Square("a3"), new Bishop(Player.WHITE));
+    positions[2][0] = new Position(new Square("c1"), new Bishop(Player.WHITE));
     // Queen on her own colour
     // white
-    positions[3][0] = new Position(new Square("a4"), new Queen(Player.WHITE));
-    positions[4][0] = new Position(new Square("a5"), new King(Player.WHITE));
-    positions[5][0] = new Position(new Square("a6"), new Bishop(Player.WHITE));
-    positions[6][0] = new Position(new Square("a7"), new Knight(Player.WHITE));
-    positions[7][0] = new Position(new Square("a8"), new Rook(Player.WHITE));
+    positions[3][0] = new Position(new Square("d1"), new Queen(Player.WHITE));
+    positions[4][0] = new Position(new Square("e1"), new King(Player.WHITE));
+    positions[5][0] = new Position(new Square("f1"), new Bishop(Player.WHITE));
+    positions[6][0] = new Position(new Square("g1"), new Knight(Player.WHITE));
+    positions[7][0] = new Position(new Square("h1"), new Rook(Player.WHITE));
 
     for (int x = 0; x < 8; x++) {
       positions[x][1] = new Position(
-          new Square("b" + File.names()[x]), new Pawn(Player.WHITE));
+          new Square(File.names()[x] + "2" ), new Pawn(Player.WHITE));
     }
 
 
     for (int y = 2; y < 6; y++) {
       for (int x = 0; x < 8; x++) {
         positions[x][y] = new Position(
-            new Square(Rank.names()[y] + File.names()[x]));
+            new Square(File.names()[x] + Rank.names()[y] ));
       }
     }
 
     for (int x = 0; x < 8; x++) {
       positions[x][6] = new Position(
-          new Square("g" + File.names()[x]), new Pawn(Player.BLACK));
+          new Square(File.names()[x] + "7"), new Pawn(Player.BLACK));
     }
 
     // white
-    positions[0][7] = new Position(new Square("h1"), new Rook(Player.BLACK));
+    positions[0][7] = new Position(new Square("a8"), new Rook(Player.BLACK));
     // black
-    positions[1][7] = new Position(new Square("h2"), new Knight(Player.BLACK));
+    positions[1][7] = new Position(new Square("b8"), new Knight(Player.BLACK));
     // white
-    positions[2][7] = new Position(new Square("h3"), new Bishop(Player.BLACK));
+    positions[2][7] = new Position(new Square("c8"), new Bishop(Player.BLACK));
     // black
     // queen on her own colour
-    positions[3][7] = new Position(new Square("h4"), new Queen(Player.BLACK));
+    positions[3][7] = new Position(new Square("d8"), new Queen(Player.BLACK));
     // King on the opposite of his queen's colour
     // white
-    positions[4][7] = new Position(new Square("h5"), new King(Player.BLACK));
-    positions[5][7] = new Position(new Square("h6"), new Bishop(Player.BLACK));
-    positions[6][7] = new Position(new Square("h7"), new Knight(Player.BLACK));
+    positions[4][7] = new Position(new Square("e8"), new King(Player.BLACK));
+    positions[5][7] = new Position(new Square("f8"), new Bishop(Player.BLACK));
+    positions[6][7] = new Position(new Square("g8"), new Knight(Player.BLACK));
     positions[7][7] = new Position(new Square("h8"), new Rook(Player.BLACK));
   }
 
@@ -126,6 +126,8 @@ public class Board {
     Position from = positions[fromSquare.x()][fromSquare.y()];
     Position to = positions[toSquare.x()][toSquare.y()];
 
+    validate(from,to);
+
     to.setPiece(from.getPiece());
     from.setPiece(null);
 
@@ -140,8 +142,8 @@ public class Board {
     }
 
     current.getPiece().validate(current, candidate);
-    // TODO return path
 
+    // TODO return path
     return new Path();
   }
 
