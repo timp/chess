@@ -13,5 +13,5 @@ The system will only allow valid moves for pieces.
  - En Passant
  - Ensuring move path is free of other pieces for Queen, Bishop, Rook
  - Determining whether a move puts the King in Check
- - Determining checkmate
+ - Determining Checkmate
  
