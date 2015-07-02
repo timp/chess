@@ -3,7 +3,7 @@
 This exercise was set as an interview test, with a time limit of four hours.
 It has taken considerably more. 
 
-The code has 100% line coverage.
+The tests achieve 100% line coverage.
 
 ## Done
 
