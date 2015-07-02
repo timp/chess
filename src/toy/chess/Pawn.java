@@ -66,7 +66,6 @@ public class Pawn extends Piece {
                 from.getSquare().file + " != " + to.getSquare().file);
       }
     }
-//TODO en passant
   }
 
 

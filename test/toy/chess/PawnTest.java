@@ -12,7 +12,7 @@ public class PawnTest extends TestCase {
     try {
       it.m("b2c3");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) { e.printStackTrace(); }
+    } catch (InvalidPieceMoveException e) { }
   }
 
   public void testDiagonalTake() {
@@ -55,8 +55,6 @@ public class PawnTest extends TestCase {
     it.m("g2g4");
     it.m("h4g3"); // Capture en passant
     it.m("d2d3").m("d7d6");
-
-    System.err.println(it);
   }
 
   public void testQueening() {

@@ -47,6 +47,7 @@ public class Square {
   public int x() {
     return file.getCoord();
   }
+
   public int y() {
     return rank.getCoord();
   }
