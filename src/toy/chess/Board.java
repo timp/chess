@@ -8,9 +8,10 @@ public class Board {
 
   private Position[][] positions = new Position[8][8];
 
-
   private Player player1;
   private Player player2;
+
+  private Position enPassantCandidate;
 
   public Player getPlayer1() {
     return player1;
@@ -30,52 +31,52 @@ public class Board {
 
   public Board() {
     // First square (a1 or 0,0) must be black and occupied by White
-    positions[0][0] = new Position(new Square("a1"), new Rook(Player.WHITE));
+    positions[0][0] = new Position(new Square(this, "a1"), new Rook(Player.WHITE));
     // white
-    positions[1][0] = new Position(new Square("b1"), new Knight(Player.WHITE));
+    positions[1][0] = new Position(new Square(this, "b1"), new Knight(Player.WHITE));
     // black
-    positions[2][0] = new Position(new Square("c1"), new Bishop(Player.WHITE));
+    positions[2][0] = new Position(new Square(this, "c1"), new Bishop(Player.WHITE));
     // Queen on her own colour
     // white
-    positions[3][0] = new Position(new Square("d1"), new Queen(Player.WHITE));
-    positions[4][0] = new Position(new Square("e1"), new King(Player.WHITE));
-    positions[5][0] = new Position(new Square("f1"), new Bishop(Player.WHITE));
-    positions[6][0] = new Position(new Square("g1"), new Knight(Player.WHITE));
-    positions[7][0] = new Position(new Square("h1"), new Rook(Player.WHITE));
+    positions[3][0] = new Position(new Square(this, "d1"), new Queen(Player.WHITE));
+    positions[4][0] = new Position(new Square(this, "e1"), new King(Player.WHITE));
+    positions[5][0] = new Position(new Square(this, "f1"), new Bishop(Player.WHITE));
+    positions[6][0] = new Position(new Square(this, "g1"), new Knight(Player.WHITE));
+    positions[7][0] = new Position(new Square(this, "h1"), new Rook(Player.WHITE));
 
     for (int x = 0; x < 8; x++) {
       positions[x][1] = new Position(
-          new Square(File.names()[x] + "2" ), new Pawn(Player.WHITE));
+          new Square(this, File.names()[x] + "2" ), new Pawn(Player.WHITE));
     }
 
 
     for (int y = 2; y < 6; y++) {
       for (int x = 0; x < 8; x++) {
         positions[x][y] = new Position(
-            new Square(File.names()[x] + Rank.names()[y] ));
+            new Square(this, File.names()[x] + Rank.names()[y] ));
       }
     }
 
     for (int x = 0; x < 8; x++) {
       positions[x][6] = new Position(
-          new Square(File.names()[x] + "7"), new Pawn(Player.BLACK));
+          new Square(this, File.names()[x] + "7"), new Pawn(Player.BLACK));
     }
 
     // white
-    positions[0][7] = new Position(new Square("a8"), new Rook(Player.BLACK));
+    positions[0][7] = new Position(new Square(this, "a8"), new Rook(Player.BLACK));
     // black
-    positions[1][7] = new Position(new Square("b8"), new Knight(Player.BLACK));
+    positions[1][7] = new Position(new Square(this, "b8"), new Knight(Player.BLACK));
     // white
-    positions[2][7] = new Position(new Square("c8"), new Bishop(Player.BLACK));
+    positions[2][7] = new Position(new Square(this, "c8"), new Bishop(Player.BLACK));
     // black
     // queen on her own colour
-    positions[3][7] = new Position(new Square("d8"), new Queen(Player.BLACK));
+    positions[3][7] = new Position(new Square(this, "d8"), new Queen(Player.BLACK));
     // King on the opposite of his queen's colour
     // white
-    positions[4][7] = new Position(new Square("e8"), new King(Player.BLACK));
-    positions[5][7] = new Position(new Square("f8"), new Bishop(Player.BLACK));
-    positions[6][7] = new Position(new Square("g8"), new Knight(Player.BLACK));
-    positions[7][7] = new Position(new Square("h8"), new Rook(Player.BLACK));
+    positions[4][7] = new Position(new Square(this, "e8"), new King(Player.BLACK));
+    positions[5][7] = new Position(new Square(this, "f8"), new Bishop(Player.BLACK));
+    positions[6][7] = new Position(new Square(this, "g8"), new Knight(Player.BLACK));
+    positions[7][7] = new Position(new Square(this, "h8"), new Rook(Player.BLACK));
   }
 
   /** Note that we need to flip the matrix to get normal chess notation. */
@@ -126,8 +127,8 @@ public class Board {
   }
 
   public Board move(MoveCode fromTo) {
-    Square fromSquare = new Square(fromTo.from());
-    Square toSquare = new Square(fromTo.to());
+    Square fromSquare = new Square(this, fromTo.from());
+    Square toSquare = new Square(this, fromTo.to());
 
     Position from = positions[fromSquare.x()][fromSquare.y()];
     Position to = positions[toSquare.x()][toSquare.y()];
@@ -138,6 +139,18 @@ public class Board {
         player2 = from.getPiece().getPlayer();
       }
     }
+
+
+    if (getEnPassantCandidate() != null) {
+      if (getEnPassantCandidate().getPiece() == null) {
+        setEnPassantCandidate(null);
+      } else {
+        if (getEnPassantCandidate().getPiece().getPlayer() == from.getPiece().getPlayer()) {
+          setEnPassantCandidate(null);
+        }
+      }
+    }
+
 
     // TODO Validate path
     validate(from, to);
@@ -165,7 +178,15 @@ public class Board {
 
 
   public Position getPosition(String squareName) {
-    Square s = new Square(squareName);
+    Square s = new Square(this, squareName);
     return positions[s.x()][s.y()];
+  }
+
+  public Position getEnPassantCandidate() {
+    return enPassantCandidate;
+  }
+
+  public void setEnPassantCandidate(Position candidate) {
+    this.enPassantCandidate = candidate;
   }
 }

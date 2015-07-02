@@ -8,23 +8,30 @@ package toy.chess;
  */
 public class Square {
 
+  Board board;
   Rank rank;
   File file;
 
-  public Square(int x, int y) {
+  public Square(Board board, int x, int y) {
+    this.board = board;
     assertValid(x);
     assertValid(y);
     this.rank = Rank.byIndex(y);
     this.file = File.byIndex(x);
   }
 
-  public Square(String squareCode) {
-    this(new SquareCode(squareCode));
+  public Square(Board board, String squareCode) {
+    this(board, new SquareCode(squareCode));
   }
 
-  public Square(SquareCode squareCode) {
+  public Square(Board board, SquareCode squareCode) {
+    this.board = board;
     this.rank = Rank.byName(squareCode.rank());
     this.file = File.byName(squareCode.file());
+  }
+
+  public Board getBoard() {
+    return board;
   }
 
   private boolean assertValid(int coord) {

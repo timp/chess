@@ -33,20 +33,20 @@ public class Knight extends Piece {
   }
   private ArrayList<Square> getPossibleMoves(Square from) {
     ArrayList<Square> moves = new ArrayList<>(8);
-    addIfLegal(moves, from.x()+1, from.y()+2);
-    addIfLegal(moves, from.x()+2, from.y()+1);
-    addIfLegal(moves, from.x()+2, from.y()-1);
-    addIfLegal(moves, from.x()+1, from.y()-2);
-    addIfLegal(moves, from.x() - 1, from.y() - 2);
-    addIfLegal(moves, from.x()-2, from.y()-1);
-    addIfLegal(moves, from.x()-2, from.y()+1);
-    addIfLegal(moves, from.x()-1, from.y()+2);
+    addIfLegal(moves, from.getBoard(), from.x()+1, from.y()+2);
+    addIfLegal(moves, from.getBoard(), from.x()+2, from.y()+1);
+    addIfLegal(moves, from.getBoard(), from.x()+2, from.y()-1);
+    addIfLegal(moves, from.getBoard(), from.x()+1, from.y()-2);
+    addIfLegal(moves, from.getBoard(), from.x() - 1, from.y() - 2);
+    addIfLegal(moves, from.getBoard(), from.x()-2, from.y()-1);
+    addIfLegal(moves, from.getBoard(), from.x()-2, from.y()+1);
+    addIfLegal(moves, from.getBoard(), from.x()-1, from.y()+2);
     return moves;
   }
 
-  private void addIfLegal(ArrayList<Square> moves, int x, int y) {
+  private void addIfLegal(ArrayList<Square> moves, Board board, int x, int y) {
     try {
-      moves.add(new Square(x, y));
+      moves.add(new Square(board, x, y));
     } catch (InvalidChessCoordinateException ignore) {}
   }
 
