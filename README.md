@@ -13,7 +13,7 @@ The system will recognise En Passant capture.
 
 ## To Do 
  - Queening
- -- Castling
+ - Castling
  - Ensure move path is free of other pieces for Queen, Bishop, Rook
  - Determine whether a move puts opposing King in Check
  - Determine if a move would place own King in Check

@@ -52,4 +52,14 @@ public class RookTest extends TestCase {
                     " +--------+ \n" +
                     "  abcdefgh  \n", it.toString());
   }
+
+  public void testCastlingShort() {
+    Board it = new Board();
+    it.m("a2a4").m("h7h6");
+  }
+  public void testCastlingLong() {
+    Board it = new Board();
+    it.m("a2a4").m("h7h6");
+  }
+
 }
