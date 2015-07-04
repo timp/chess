@@ -9,11 +9,13 @@ The tests achieve 100% line coverage.
 
 The system reads a file of moves and applies them to a correctly setup board.
 The system will only allow valid moves for pieces.
-The system will recognise En Passant capture. 
+The system will recognise:
+ - En Passant capture
+ - Castling
+ - Queening
+
 
 ## To Do 
- - Queening
- - Castling
  - Ensure move path is free of other pieces for Queen, Bishop, Rook
  - Determine whether a move puts opposing King in Check
  - Determine if a move would place own King in Check

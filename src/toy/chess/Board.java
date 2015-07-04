@@ -17,16 +17,8 @@ public class Board {
     return player1;
   }
 
-  public void setPlayer1(Player player1) {
-    this.player1 = player1;
-  }
-
   public Player getPlayer2() {
     return player2;
-  }
-
-  public void setPlayer2(Player player2) {
-    this.player2 = player2;
   }
 
   public Board() {
@@ -145,7 +137,9 @@ public class Board {
       if (getEnPassantCandidate().getPiece() == null) {
         setEnPassantCandidate(null);
       } else {
-        if (getEnPassantCandidate().getPiece().getPlayer() == from.getPiece().getPlayer()) {
+        if (getEnPassantCandidate().getPiece().getPlayer()
+            == from.getPiece().getPlayer()) {
+
           setEnPassantCandidate(null);
         }
       }
@@ -158,15 +152,33 @@ public class Board {
 
     to.setPiece(from.getPiece());
     from.setPiece(null);
+    if (to.getPiece() instanceof Pawn) {
+      if (to.getSquare().y() == 0 || to.getSquare().y() == 7) {
+        to.setPiece(new Queen(to.getPiece().getPlayer()));
+      }
+    }
     return this;
   }
   public Path validate(Position current, Position candidate) {
     if (current.getPiece() == null)
       throw new NoPieceAtPositionException("No piece to move at " + current);
 
-    if (candidate.getPiece() != null && (candidate.getPiece().getPlayer() == current.getPiece().getPlayer())) {
-      throw new PositionOccupiedBySelfException(
-          "Player already occupies " + candidate);
+    if (candidate.getPiece() != null
+        && (candidate.getPiece().getPlayer() ==
+        current.getPiece().getPlayer())) {
+      if (current.getPiece() instanceof Rook &&
+          candidate.getPiece() instanceof King) {
+        if (current.getSquare().x() > candidate.getSquare().x()) {
+          positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
+              .setPiece(candidate.getPiece());
+        } else {
+          positions[candidate.getSquare().x() - 1][candidate.getSquare().y()]
+              .setPiece(candidate.getPiece());
+        }
+      } else {
+        throw new PositionOccupiedBySelfException(
+            "Player already occupies " + candidate);
+      }
     }
 
 
@@ -176,10 +188,13 @@ public class Board {
     return new Path();
   }
 
-
   public Position getPosition(String squareName) {
     Square s = new Square(this, squareName);
     return positions[s.x()][s.y()];
+  }
+
+  public Piece pieceAt(String squareName) {
+    return getPosition(squareName).getPiece();
   }
 
   public Position getEnPassantCandidate() {
@@ -189,4 +204,5 @@ public class Board {
   public void setEnPassantCandidate(Position candidate) {
     this.enPassantCandidate = candidate;
   }
+
 }

@@ -16,8 +16,8 @@ public class Square {
     this.board = board;
     assertValid(x);
     assertValid(y);
-    this.rank = Rank.byIndex(y);
     this.file = File.byIndex(x);
+    this.rank = Rank.byIndex(y);
   }
 
   public Square(Board board, String squareCode) {
@@ -78,4 +78,5 @@ public class Square {
     result = 31 * result + file.ordinal();
     return result;
   }
+
 }

@@ -53,11 +53,23 @@ public class PawnTest extends TestCase {
     it.m("b5c6"); // Capture en passant
     it.m("h5h4");
     it.m("g2g4");
+    try{
+      // Ensure only relevant piece can move diagonally
+      // when board in en Passant state
+      it.m("b7a6");
+      fail("Should have bombed");
+    } catch (InvalidPieceMoveException e) { }
     it.m("h4g3"); // Capture en passant
     it.m("d2d3").m("d7d6");
   }
 
   public void testQueening() {
-  // TODO
+    Board it = new Board();
+    it.m("b2b4").m("c7c5");
+    it.m("b4c5").m("d7d5");
+    it.m("c5c6").m("c8e6");
+    it.m("c6c7").m("e6g4");
+    it.m("c7c8");// Queen
+    assertEquals("q", it.pieceAt("c8").getAbbreviation());
   }
 }
