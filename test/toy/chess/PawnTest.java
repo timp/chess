@@ -12,7 +12,8 @@ public class PawnTest extends TestCase {
     try {
       it.m("b2c3");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) { }
+    } catch (InvalidPieceMoveException e) {
+    }
   }
 
   public void testDiagonalTake() {
@@ -29,11 +30,13 @@ public class PawnTest extends TestCase {
     try {
       it.m("a4a6");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) { }
+    } catch (InvalidPieceMoveException e) {
+    }
     try {
       it.m("a4a7");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) { }
+    } catch (InvalidPieceMoveException e) {
+    }
   }
 
 
@@ -43,7 +46,8 @@ public class PawnTest extends TestCase {
     try {
       it.m("a4g5");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) { }
+    } catch (InvalidPieceMoveException e) {
+    }
   }
 
   public void testEnPassant() {
@@ -53,12 +57,13 @@ public class PawnTest extends TestCase {
     it.m("b5c6"); // Capture en passant
     it.m("h5h4");
     it.m("g2g4");
-    try{
+    try {
       // Ensure only relevant piece can move diagonally
       // when board in en Passant state
       it.m("b7a6");
       fail("Should have bombed");
-    } catch (InvalidPieceMoveException e) { }
+    } catch (InvalidPieceMoveException e) {
+    }
     it.m("h4g3"); // Capture en passant
     it.m("d2d3").m("d7d6");
   }
@@ -71,5 +76,33 @@ public class PawnTest extends TestCase {
     it.m("c6c7").m("e6g4");
     it.m("c7c8");// Queen
     assertEquals("q", it.pieceAt("c8").getAbbreviation());
+  }
+
+  public void testSquareUnoccupiedWhenNotCapturing() {
+    Board it = new Board();
+    it.m("b2b4").m("c7c5");
+    it.m("b4b5").m("c5c4");
+    try {
+      it.m("c2c4");
+      fail("should have bombed");
+    } catch (InvalidPieceMoveException e) {}
+    it.m("a2a3").m("c4c3");
+    try {
+      it.m("c2c3");
+      fail("should have bombed");
+    } catch (InvalidPieceMoveException e) {}
+    assertEquals(
+        "  abcdefgh  \n" +
+        " +--------+ \n" +
+        "8|RNBQKBNR|8\n" +
+        "7|PP PPPPP|7\n" +
+        "6|        |6\n" +
+        "5| p      |5\n" +
+        "4|        |4\n" +
+        "3|p P     |3\n" +
+        "2|  pppppp|2\n" +
+        "1|rnbqkbnr|1\n" +
+        " +--------+ \n" +
+        "  abcdefgh  \n",it.toString());
   }
 }

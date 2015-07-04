@@ -50,6 +50,13 @@ public class Pawn extends Piece {
               "A " + getName() + " must move directly forward in the same file unless taking " +
                   from.getSquare().file + " != " + to.getSquare().file);
 
+      } else {
+        if (to.getPiece() != null) {
+          throw new InvalidPieceMoveException(
+              "A " + getName() + " may not move on to an occupied square ");
+        } else {
+          return;
+        }
       }
     } else if (distance == 2) {
       if ((from.getSquare().rank == Rank.TWO
@@ -57,10 +64,15 @@ public class Pawn extends Piece {
           ||
           (from.getSquare().rank == Rank.SEVEN
               && from.getPiece().getPlayer() == Player.BLACK)) {
-        // Opponents next move may be en passant
-        // We need to record that against the Board
-        from.getSquare().getBoard().setEnPassantCandidate(to);
-        return;
+        if (to.getPiece() != null) {
+          throw new InvalidPieceMoveException(
+              "A " + getName() + " may not move on to an occupied square ");
+        } else {
+          // Opponents next move may be en passant
+          // We need to record that against the Board
+          from.getSquare().getBoard().setEnPassantCandidate(to);
+          return;
+        }
       } else {
         throw new InvalidPieceMoveException(
             "A " + getName() + " may only move one square forward once moved");
