@@ -41,4 +41,8 @@ public class Knight extends Piece {
     } catch (InvalidChessCoordinateException ignore) {}
   }
 
+  @Override
+  public Object clone() {
+    return new Knight(player);
+  }
 }

@@ -34,12 +34,6 @@ public abstract class Piece implements Cloneable {
 
   }
 
-  @Override
-  protected Object clone() throws CloneNotSupportedException {
-    Piece newPiece = (Piece) super.clone();
-    newPiece.player = player;
-    return newPiece;
-  }
 
   @Override
   public boolean equals(Object o) {
@@ -63,7 +57,7 @@ public abstract class Piece implements Cloneable {
 
   public abstract void validate(Position from, Position to);
 
-
+  protected abstract Object clone();
 }
 
 

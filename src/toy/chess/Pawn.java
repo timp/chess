@@ -78,5 +78,9 @@ public class Pawn extends Piece {
 
   }
 
+  @Override
+  public Object clone() {
+    return new Pawn(player);
+  }
 
 }

@@ -12,6 +12,9 @@ public class Square implements Cloneable {
   Rank rank;
   File file;
 
+  // Used by clone
+  private Square() {}
+
   public Square(Board board, int x, int y) {
     this.board = board;
     assertValid(x);
@@ -53,20 +56,13 @@ public class Square implements Cloneable {
   }
 
   @Override
-  protected Object clone() throws CloneNotSupportedException {
-    Square newSquare = (Square)super.clone();
+  protected Object clone() {
+    Square newSquare = new Square();
     newSquare.rank = rank;
     newSquare.file = file;
     return newSquare;
   }
 
-  public String pic() {
-    if((x() + y()) % 2 == 0){
-      return "#";
-    } else {
-      return " ";
-    }
-  }
 
   @Override
   public boolean equals(Object o) {

@@ -43,7 +43,7 @@ public class Game {
         MoveCode mc = nextMove();
 
         try {
-          board.move(mc);
+          board = board.move(mc);
         } catch (InvalidMoveException e) {
           throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
         }

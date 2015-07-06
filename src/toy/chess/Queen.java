@@ -33,4 +33,8 @@ public class Queen extends Piece {
   }
 
 
+  @Override
+  public Object clone() {
+    return new Queen(player);
+  }
 }

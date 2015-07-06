@@ -20,4 +20,8 @@ public class Rook extends Piece {
           "A " + getName() +  " may only move in straight lines");
   }
 
+  @Override
+  public Object clone() {
+    return new Rook(player);
+  }
 }

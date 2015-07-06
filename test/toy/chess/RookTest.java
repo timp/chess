@@ -15,12 +15,12 @@ public class RookTest extends TestCase {
   }
   public void testValidateDiagonalFails() {
     Board it = new Board();
-    it.m("a2a4").m("h7h6").m("b2b4").m("h6h5");
+    it = it.m("a2a4").m("h7h6").m("b2b4").m("h6h5");
     try {
       it.m("a1b2");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) { }
-    it.m("a1a3").m("h5h4").m("a3b3");
+    it = it.m("a1a3").m("h5h4").m("a3b3");
     assertEquals(
                     "  abcdefgh  \n" +
                     " +--------+ \n" +
@@ -38,12 +38,12 @@ public class RookTest extends TestCase {
 
   public void testCannotMoveOntoOwnPiece() {
     Board it = new Board();
-    it.m("a2a4").m("h7h6");
+    it = it.m("a2a4").m("h7h6");
     try {
       it.m("a1a4");
       fail("Should have bombed");
     } catch (PositionOccupiedBySelfException e) { }
-    it.m("a1a3").m("h6h5").m("a3b3");
+    it = it.m("a1a3").m("h6h5").m("a3b3");
     assertEquals(
                     "  abcdefgh  \n" +
                     " +--------+ \n" +
@@ -61,13 +61,13 @@ public class RookTest extends TestCase {
 
   public void testCastlingShort() {
     Board it = new Board();
-    it.m("g1h3").m("g8h6");
-    it.m("e2e3").m("e7e6");
-    it.m("d2d3").m("d7d6");
-    it.m("f1e2").m("f8e7");
-    it.m("h1e1"); //Castle
-    it.m("h8e8"); //castle
-    it.m("a2a4").m("a7a5");
+    it = it.m("g1h3").m("g8h6");
+    it = it.m("e2e3").m("e7e6");
+    it = it.m("d2d3").m("d7d6");
+    it = it.m("f1e2").m("f8e7");
+    it = it.m("h1e1"); //Castle
+    it = it.m("h8e8"); //castle
+    it = it.m("a2a4").m("a7a5");
     assertEquals(
         "  abcdefgh  \n" +
         " +--------+ \n" +
@@ -84,15 +84,15 @@ public class RookTest extends TestCase {
   }
   public void testCastlingLong() {
     Board it = new Board();
-    it.m("b1a3").m("b8a6");
-    it.m("b2b4").m("b7b6");
-    it.m("c1b2").m("c8b7");
-    it.m("e2e3").m("e7e6");
-    it.m("f2f4").m("f7f5");
-    it.m("d1g4");
-    it.m("d8g5");
-    it.m("a1e1").m("a8e8");
-    it.m("g4f5").m("g5f4");
+    it = it.m("b1a3").m("b8a6");
+    it = it.m("b2b4").m("b7b6");
+    it = it.m("c1b2").m("c8b7");
+    it = it.m("e2e3").m("e7e6");
+    it = it.m("f2f4").m("f7f5");
+    it = it.m("d1g4");
+    it = it.m("d8g5");
+    it = it.m("a1e1").m("a8e8");
+    it = it.m("g4f5").m("g5f4");
     assertEquals(
         "  abcdefgh  \n" +
         " +--------+ \n" +

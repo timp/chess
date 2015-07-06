@@ -36,5 +36,9 @@ public class King extends Piece {
     }
   }
 
+  @Override
+  public Object clone() {
+    return new King(player);
+  }
 
 }

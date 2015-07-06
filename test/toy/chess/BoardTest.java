@@ -36,7 +36,7 @@ public class BoardTest extends TestCase {
 
   public void testValidateOntopOfOwn() {
     Board it = new Board();
-    it.m("a2a3").m("h7h6");
+    it = it.m("a2a3").m("h7h6");
     try {
       it.m("a1a3");
       fail("Should have bombed");
@@ -62,34 +62,6 @@ public class BoardTest extends TestCase {
             "A6B6C6D6E6F6G6H6\n" +
             "A7B7C7D7E7F7G7H7\n" +
             "A8B8C8D8E8F8G8H8\n", it.names());
-  }
-
-  public void testNothingOnPathBishop() {
-
-  }
-
-  public void testNothingOnPathRook() {
-
-  }
-
-  public void testNothingOnPathQueen() {
-
-  }
-
-  public void testNothingOnPathPawn() {
-
-  }
-
-  public void testPic() {
-    assertEquals(
-        "# # # # \n" +
-        " # # # #\n" +
-        "# # # # \n" +
-        " # # # #\n" +
-        "# # # # \n" +
-        " # # # #\n" +
-        "# # # # \n" +
-        " # # # #\n", new Board().pic());
   }
 
   public void testPieceNames() {
@@ -120,7 +92,7 @@ public class BoardTest extends TestCase {
     assertEquals(it.toString(), it.clone().toString());
     Board c = it.clone();
     assertTrue(it.equals(c));
-    c.m("a2a3");
+    c = c.m("a2a3");
     assertFalse(it.equals(c));
   }
 

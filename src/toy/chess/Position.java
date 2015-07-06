@@ -15,6 +15,9 @@ public class Position implements Cloneable {
     this(s, null);
   }
 
+  // Used by clone
+  private Position() {}
+
   public Position(Square square, Piece piece) {
     this.square = square;
     this.piece = piece;
@@ -59,14 +62,13 @@ public class Position implements Cloneable {
   }
 
   @Override
-  protected Object clone() throws CloneNotSupportedException {
-    Position newposition = (Position)super.clone();
+  protected Object clone() {
+    Position newPosition = new Position();
     if (square != null)
-      newposition.square = (Square)square.clone();
+      newPosition.square = (Square) square.clone();
     if (piece != null)
-      newposition.piece = (Piece)piece.clone();
-    return newposition;
+      newPosition.piece = (Piece) piece.clone();
+    return newPosition;
   }
-
 
 }

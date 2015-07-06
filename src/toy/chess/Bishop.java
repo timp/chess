@@ -23,4 +23,10 @@ public class Bishop extends Piece {
           "A " + getName() + " must move diagonally");
     }
   }
+
+  @Override
+  public Object clone() {
+    return new Bishop(player);
+  }
+
 }

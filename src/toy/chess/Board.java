@@ -87,19 +87,6 @@ public class Board implements Cloneable {
   }
 
 
-  /**
-   * Note that a1 is in the top left, not bottom left
-   */
-  public String pic() {
-    String pic = "";
-    for (int y = 0; y < 8; y++) {
-      for (int x = 0; x < 8; x++) {
-        pic += positions[x][y].getSquare().pic();
-      }
-      pic += "\n";
-    }
-    return pic;
-  }
 
   public String names() {
     String pic = "";
@@ -117,11 +104,13 @@ public class Board implements Cloneable {
   }
 
   public Board move(MoveCode fromTo) {
-    Square fromSquare = new Square(this, fromTo.from());
-    Square toSquare = new Square(this, fromTo.to());
+    Board nextBoard = clone();
+    Square fromSquare = new Square(nextBoard, fromTo.from());
+    Square toSquare = new Square(nextBoard, fromTo.to());
 
-    Position from = positions[fromSquare.x()][fromSquare.y()];
-    Position to = positions[toSquare.x()][toSquare.y()];
+    Position from = nextBoard.positions[fromSquare.x()][fromSquare.y()];
+    Position to = nextBoard.positions[toSquare.x()][toSquare.y()];
+
     if (player1 == null) {
       player1 = from.getPiece().getPlayer();
     } else {
@@ -150,7 +139,7 @@ public class Board implements Cloneable {
         to.setPiece(new Queen(to.getPiece().getPlayer()));
       }
     }
-    return this;
+    return nextBoard;
   }
 
   public List<Square> getPath(Square from, Square to) {
@@ -230,11 +219,13 @@ public class Board implements Cloneable {
         if (current.getPiece() instanceof Rook &&
             candidate.getPiece() instanceof King) {
           // TODO Bad smell altering board state in validate
+
           if (current.getSquare().x() > candidate.getSquare().x()) {
-            positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
+
+            candidate.getSquare().getBoard().positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
                 .setPiece(candidate.getPiece());
           } else {
-            positions[candidate.getSquare().x() - 1][candidate.getSquare().y()]
+            candidate.getSquare().getBoard().positions[candidate.getSquare().x() - 1][candidate.getSquare().y()]
                 .setPiece(candidate.getPiece());
           }
           castling = true;
@@ -300,7 +291,7 @@ public class Board implements Cloneable {
     return result;
   }
   @Override
-  public Board clone() throws CloneNotSupportedException {
+  public Board clone() {
     Position[][] newPositions = new Position[8][8];
     Board newBoard = new Board(newPositions);
     for (int x = 0; x < 8; x++) {
@@ -308,6 +299,11 @@ public class Board implements Cloneable {
         newPositions[x][y] = (Position)positions[x][y].clone();
         newPositions[x][y].getSquare().board = newBoard;
       }
+    }
+    newBoard.player1 = player1;
+    newBoard.player2 = player2;
+    if (enPassantCandidate != null) {
+      newBoard.enPassantCandidate = (Position) enPassantCandidate.clone();
     }
     return newBoard;
   }
