@@ -72,6 +72,7 @@ public class PawnTest extends TestCase {
     Board it = new Board();
     it.m("b2b4").m("c7c5");
     it.m("b4c5").m("d7d5");
+    System.err.println(it);
     it.m("c5c6").m("c8e6");
     it.m("c6c7").m("e6g4");
     it.m("c7c8");// Queen
@@ -104,5 +105,16 @@ public class PawnTest extends TestCase {
         "1|rnbqkbnr|1\n" +
         " +--------+ \n" +
         "  abcdefgh  \n",it.toString());
+  }
+  public void testPathIsEmpty() {
+    Board it = new Board();
+    it.m("c2c4").m("h7h5");
+    it.m("c4c5").m("h5h4");
+    it.m("c5c6").m("h4h3");
+    try{
+      it.m("h2h4");
+      fail("Should have bombed");
+    } catch (InvalidPieceMoveException e) {}
+    System.err.println(it.toString());
   }
 }

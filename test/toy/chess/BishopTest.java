@@ -14,7 +14,12 @@ public class BishopTest extends TestCase {
       it.m("c1c3");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) { }
-    it.m("b2b4").m("b7b5").m("c1a3");
+    System.err.println(it);
+    it.m("b2b4").m("b7b5");
+    try {
+      // Obstructed diagonal
+      it.m("c1a3");
+    } catch (InvalidPieceMoveException e) {}
   }
   public void testCanMoveInAllDiagonals() {
     Board it = new Board();
@@ -24,5 +29,12 @@ public class BishopTest extends TestCase {
     it.m("a3b2").m("g6g5");
     it.m("b2e5").m("g5g4");
     it.m("e5b8").m("g4g3");
+  }
+  public void testPathIsEmpty() {
+    Board it = new Board();
+    try {
+      it.m("c1a3");
+      fail("Should have bombed");
+    } catch (InvalidPieceMoveException e) {}
   }
 }

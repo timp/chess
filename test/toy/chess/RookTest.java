@@ -83,7 +83,9 @@ public class RookTest extends TestCase {
     it.m("c1b2").m("c8b7");
     it.m("e2e3").m("e7e6");
     it.m("f2f4").m("f7f5");
-    it.m("d1g4").m("d8g5");
+    System.err.println(it);
+    it.m("d1g4");
+    it.m("d8g5");
     it.m("a1e1").m("a8e8");
     it.m("g4f5").m("g5f4");
     assertEquals(
@@ -101,4 +103,11 @@ public class RookTest extends TestCase {
         "  abcdefgh  \n", it.toString());
   }
 
+  public void testPathIsEmpty() {
+    Board it = new Board();
+    try {
+      it.m("a1a4");
+      fail("Should have bombed");
+    } catch (InvalidPieceMoveException e) {}
+  }
 }

@@ -17,7 +17,7 @@ public class KnightTest extends TestCase {
     it.m("e3c4").m("g6g5");
     it.m("b2b4").m("g5g4");
     it.m("c4b2").m("g4g3");
-    it.m("b2d3").m("g3h2");
+    it.m("b2d3").m("f2f3");
   }
   public void testIllegalMove() {
     Board it = new Board();
