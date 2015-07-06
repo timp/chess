@@ -14,7 +14,6 @@ public class BishopTest extends TestCase {
       it.m("c1c3");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) { }
-    System.err.println(it);
     it.m("b2b4").m("b7b5");
     try {
       // Obstructed diagonal
@@ -37,4 +36,12 @@ public class BishopTest extends TestCase {
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
   }
+
+  public void testHashCode() {
+    Bishop it = new Bishop(Player.WHITE);
+    assertEquals(98, it.hashCode());
+    it = new Bishop(Player.BLACK);
+    assertEquals(129, it.hashCode());
+  }
+
 }

@@ -10,16 +10,8 @@ public class Queen extends Piece {
 
   public Queen(Player o) {
     super(o);
-  }
-
-  @Override
-  public String getName() {
-    return "Queen";
-  }
-
-  @Override
-  public String getAbbreviation() {
-    return getPlayer() == BLACK ? "Q" : "q";
+    name = "Queen";
+    abbreviation = "q";
   }
 
   /** Any unobstructed horizontal, vertical or diagonal move of any length.*/

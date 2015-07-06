@@ -114,4 +114,19 @@ public class BoardTest extends TestCase {
     assertEquals("Knight", it.getPosition("g8").getPiece().getName());
     assertEquals("Rook", it.getPosition("h8").getPiece().getName());
   }
+
+  public void testClone() throws Exception {
+    Board it = new Board();
+    assertEquals(it.toString(), it.clone().toString());
+    Board c = it.clone();
+    assertTrue(it.equals(c));
+    c.m("a2a3");
+    assertFalse(it.equals(c));
+  }
+
+  public void testHashCode() {
+    Board it = new Board();
+    assertEquals(1658276767, it.hashCode());
+  }
+
 }

@@ -10,16 +10,8 @@ public class Pawn extends Piece {
 
   public Pawn(Player o) {
     super(o);
-  }
-
-  @Override
-  public String getName() {
-    return "Pawn";
-  }
-
-  @Override
-  public String getAbbreviation() {
-    return getPlayer() == BLACK ? "P" : "p";
+    name = "Pawn";
+    abbreviation = "p";
   }
 
   @Override
@@ -35,6 +27,7 @@ public class Pawn extends Piece {
             if (b.getEnPassantCandidate() != null)
               if (b.getEnPassantCandidate().getSquare().y() ==
                   (to.getSquare().y() + b.getEnPassantCandidate().getPiece().getPlayer().getDirection())) {
+                // TODO Bad smell altering board state in validate
                 b.getEnPassantCandidate().setPiece(null);
                 return;
               } else {

@@ -1,30 +1,34 @@
 package toy.chess;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
+ * A chess board with pieces on specific squares.
+ *
  * @author timp
  * @since 2015/06/29
  */
-public class Board {
+public class Board implements Cloneable {
 
-  private Position[][] positions = new Position[8][8];
+  private Position[][] positions = null;
 
   private Player player1;
   private Player player2;
 
   private Position enPassantCandidate;
 
-  public Player getPlayer1() {
-    return player1;
-  }
-
-  public Player getPlayer2() {
-    return player2;
-  }
-
   public Board() {
+    this(new Position[8][8]);
+    setup();
+  }
+
+  private Board(Position[][] positions) {
+    this.positions = positions;
+  }
+
+  private void setup() {
     // First square (a1 or 0,0) must be black and occupied by White
     positions[0][0] = new Position(new Square(this, "a1"), new Rook(Player.WHITE));
     // white
@@ -74,27 +78,14 @@ public class Board {
     positions[7][7] = new Position(new Square(this, "h8"), new Rook(Player.BLACK));
   }
 
-  /**
-   * Note that we need to flip the matrix to get normal chess notation.
-   */
-  public String toString() {
-    StringBuilder it = new StringBuilder();
-    it.append("  abcdefgh  \n");
-    it.append(" +--------+ \n");
-    for (int y = 7; y > -1; y--) {
-      it.append(y + 1);
-      it.append('|');
-      for (int x = 0; x < 8; x++) {
-        it.append(positions[x][y].pic());
-      }
-      it.append('|');
-      it.append(y + 1);
-      it.append("\n");
-    }
-    it.append(" +--------+ \n");
-    it.append("  abcdefgh  \n");
-    return it.toString();
+  public Player getPlayer1() {
+    return player1;
   }
+
+  public Player getPlayer2() {
+    return player2;
+  }
+
 
   /**
    * Note that a1 is in the top left, not bottom left
@@ -139,21 +130,17 @@ public class Board {
       }
     }
 
-
     if (getEnPassantCandidate() != null) {
       if (getEnPassantCandidate().getPiece() == null) {
         setEnPassantCandidate(null);
       } else {
         if (getEnPassantCandidate().getPiece().getPlayer()
             == from.getPiece().getPlayer()) {
-
           setEnPassantCandidate(null);
         }
       }
     }
 
-
-    // TODO Validate path
     validate(from, to);
 
     to.setPiece(from.getPiece());
@@ -214,7 +201,6 @@ public class Board {
           }
         }
       } else if ((from.x() > to.x()) && (from.y() > to.y())){
-        System.err.println("SW");
         for (int x = from.x() - 1, y = from.y() - 1;
              x > to.x(); x--, y--) {
           if (positions[x][y].getPiece() != null) {
@@ -243,6 +229,7 @@ public class Board {
           && candidate.getPiece().getPlayer() == current.getPiece().getPlayer()) {
         if (current.getPiece() instanceof Rook &&
             candidate.getPiece() instanceof King) {
+          // TODO Bad smell altering board state in validate
           if (current.getSquare().x() > candidate.getSquare().x()) {
             positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
                 .setPiece(candidate.getPiece());
@@ -286,6 +273,66 @@ public class Board {
 
   public void setEnPassantCandidate(Position candidate) {
     this.enPassantCandidate = candidate;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Board board = (Board) o;
+
+    if (!Arrays.deepEquals(positions, board.positions)) {
+      return false;
+    }
+    if (player1 != board.player1) return false;
+    if (player2 != board.player2) return false;
+    return !(enPassantCandidate != null ? !enPassantCandidate.equals(board.enPassantCandidate) : board.enPassantCandidate != null);
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = Arrays.deepHashCode(positions);
+    result = 31 * result + (player1 != null ? player1.ordinal() : 0);
+    result = 31 * result + (player2 != null ? player2.ordinal() : 0);
+    result = 31 * result + (enPassantCandidate != null ? enPassantCandidate.hashCode() : 0);
+    return result;
+  }
+  @Override
+  public Board clone() throws CloneNotSupportedException {
+    Position[][] newPositions = new Position[8][8];
+    Board newBoard = new Board(newPositions);
+    for (int x = 0; x < 8; x++) {
+      for (int y = 0; y < 8; y++) {
+        newPositions[x][y] = (Position)positions[x][y].clone();
+        newPositions[x][y].getSquare().board = newBoard;
+      }
+    }
+    return newBoard;
+  }
+
+  /**
+   * Note that we need to flip the matrix to get normal chess notation.
+   */
+  @Override
+  public String toString() {
+    StringBuilder it = new StringBuilder();
+    it.append("  abcdefgh  \n");
+    it.append(" +--------+ \n");
+    for (int y = 7; y > -1; y--) {
+      it.append(y + 1);
+      it.append('|');
+      for (int x = 0; x < 8; x++) {
+        it.append(positions[x][y].pic());
+      }
+      it.append('|');
+      it.append(y + 1);
+      it.append("\n");
+    }
+    it.append(" +--------+ \n");
+    it.append("  abcdefgh  \n");
+    return it.toString();
   }
 
 }

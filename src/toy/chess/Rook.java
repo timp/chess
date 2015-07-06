@@ -1,7 +1,5 @@
 package toy.chess;
 
-import static toy.chess.Player.BLACK;
-
 /**
  * @author timp
  * @since 2015/06/29
@@ -10,16 +8,8 @@ public class Rook extends Piece {
 
   public Rook(Player o) {
     super(o);
-  }
-
-  @Override
-  public String getName() {
-    return "Rook";
-  }
-
-  @Override
-  public String getAbbreviation() {
-    return getPlayer() == BLACK ? "R" : "r";
+    name = "Rook";
+    abbreviation = "r";
   }
 
   @Override
@@ -30,5 +20,4 @@ public class Rook extends Piece {
           "A " + getName() +  " may only move in straight lines");
   }
 
-// TODO Castling
 }

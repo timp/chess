@@ -6,7 +6,7 @@ package toy.chess;
  * @author timp
  * @since 2015-06-30.
  */
-public class Square {
+public class Square implements Cloneable {
 
   Board board;
   Rank rank;
@@ -50,6 +50,14 @@ public class Square {
 
   public int y() {
     return rank.getCoord();
+  }
+
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    Square newSquare = (Square)super.clone();
+    newSquare.rank = rank;
+    newSquare.file = file;
+    return newSquare;
   }
 
   public String pic() {

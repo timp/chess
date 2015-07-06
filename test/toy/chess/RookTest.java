@@ -7,6 +7,12 @@ import junit.framework.TestCase;
  * @since 2015-06-30.
  */
 public class RookTest extends TestCase {
+  public void testName() {
+    assertEquals("Rook", new Rook(Player.BLACK).getName());
+  }
+  public void testAbreviation() {
+    assertEquals("R", new Rook(Player.BLACK).getAbbreviation());
+  }
   public void testValidateDiagonalFails() {
     Board it = new Board();
     it.m("a2a4").m("h7h6").m("b2b4").m("h6h5");
@@ -83,7 +89,6 @@ public class RookTest extends TestCase {
     it.m("c1b2").m("c8b7");
     it.m("e2e3").m("e7e6");
     it.m("f2f4").m("f7f5");
-    System.err.println(it);
     it.m("d1g4");
     it.m("d8g5");
     it.m("a1e1").m("a8e8");

@@ -6,7 +6,7 @@ package toy.chess;
  * @author timp
  * @since 2015/06/29
  */
-public class Position {
+public class Position implements Cloneable {
 
   Square square = null;
   Piece piece = null;
@@ -35,4 +35,38 @@ public class Position {
   public Square getSquare() {
     return square;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Position position = (Position) o;
+
+    if (!square.equals(position.square)) {
+      return false;
+    }
+    return !(piece != null ? !piece.equals(position.piece)
+        : position.piece != null);
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = square.hashCode();
+    result = 31 * result + (piece != null ? piece.hashCode() : 0);
+    return result;
+  }
+
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    Position newposition = (Position)super.clone();
+    if (square != null)
+      newposition.square = (Square)square.clone();
+    if (piece != null)
+      newposition.piece = (Piece)piece.clone();
+    return newposition;
+  }
+
+
 }

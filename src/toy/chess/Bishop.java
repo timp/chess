@@ -8,18 +8,10 @@ public class Bishop extends Piece {
 
   public Bishop(Player o) {
     super(o);
+    name = "Bishop";
+    abbreviation = "b";
   }
 
-  @Override
-  public String getName() {
-    return "Bishop";
-  }
-
-
-  @Override
-  public String getAbbreviation() {
-    return getPlayer() == Player.BLACK ? "B" : "b";
-  }
 
   @Override
   public void validate(Position from, Position to) {

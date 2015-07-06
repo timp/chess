@@ -72,7 +72,6 @@ public class PawnTest extends TestCase {
     Board it = new Board();
     it.m("b2b4").m("c7c5");
     it.m("b4c5").m("d7d5");
-    System.err.println(it);
     it.m("c5c6").m("c8e6");
     it.m("c6c7").m("e6g4");
     it.m("c7c8");// Queen
@@ -115,6 +114,12 @@ public class PawnTest extends TestCase {
       it.m("h2h4");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
-    System.err.println(it.toString());
+  }
+
+  public void testHashCode() {
+    Pawn it = new Pawn(Player.WHITE);
+    assertEquals(112, it.hashCode());
+    it = new Pawn(Player.BLACK);
+    assertEquals(143, it.hashCode());
   }
 }

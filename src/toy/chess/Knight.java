@@ -10,17 +10,8 @@ public class Knight extends Piece {
 
   public Knight(Player o) {
     super(o);
-  }
-
-  @Override
-  public String getName() {
-    return "Knight";
-  }
-
-  /** See https://en.wikipedia.org/wiki/Descriptive_notation  */
-  @Override
-  public String getAbbreviation() {
-    return getPlayer() == Player.BLACK ? "N" : "n";
+    name = "Knight";
+    abbreviation = "n";
   }
 
   @Override
