@@ -119,27 +119,68 @@ public class Board implements Cloneable {
       }
     }
 
+    perform(from, to);
+
+    return nextBoard;
+  }
+
+
+  public void perform(Position current, Position candidate) {
+    boolean castling = false;
     if (getEnPassantCandidate() != null) {
       if (getEnPassantCandidate().getPiece() == null) {
         setEnPassantCandidate(null);
       } else {
         if (getEnPassantCandidate().getPiece().getPlayer()
-            == from.getPiece().getPlayer()) {
+            == current.getPiece().getPlayer()) {
           setEnPassantCandidate(null);
         }
       }
     }
+    if (current.getPiece() == null) {
+      throw new NoPieceAtPositionException("No piece to move at " + current);
+    } else {
+      if (candidate.getPiece() != null
+          && candidate.getPiece().getPlayer() == current.getPiece().getPlayer()) {
+        if (current.getPiece() instanceof Rook &&
+            candidate.getPiece() instanceof King) {
 
-    validate(from, to);
+          if (current.getSquare().x() > candidate.getSquare().x()) {
 
-    to.setPiece(from.getPiece());
-    from.setPiece(null);
-    if (to.getPiece() instanceof Pawn) {
-      if (to.getSquare().y() == 0 || to.getSquare().y() == 7) {
-        to.setPiece(new Queen(to.getPiece().getPlayer()));
+            candidate.getSquare().getBoard().positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
+                .setPiece(candidate.getPiece());
+          } else {
+            candidate.getSquare().getBoard().positions[candidate.getSquare().x() - 1][candidate.getSquare().y()]
+                .setPiece(candidate.getPiece());
+          }
+          castling = true;
+        } else {
+          throw new PositionOccupiedBySelfException(
+              "Player already occupies " + candidate);
+        }
       }
     }
-    return nextBoard;
+
+    current.getPiece().perform(current, candidate);
+
+    if (!(current.getPiece() instanceof Knight
+        || current.getPiece() instanceof King)) {
+      List<Square> path = getPath(current.getSquare(), candidate.getSquare());
+      if (!path.isEmpty()) {
+        if (!(castling && path.size() == 1)) {
+          throw new InvalidPieceMoveException("Piece may not jump others " + path);
+        }
+      }
+    }
+
+    candidate.setPiece(current.getPiece());
+    current.setPiece(null);
+    if (candidate.getPiece() instanceof Pawn) {
+      if (candidate.getSquare().y() == 0 || candidate.getSquare().y() == 7) {
+        candidate.setPiece(new Queen(candidate.getPiece().getPlayer()));
+      }
+    }
+
   }
 
   public List<Square> getPath(Square from, Square to) {
@@ -176,10 +217,10 @@ public class Board implements Cloneable {
       } else if ((from.x() < to.x()) && (from.y() < to.y())) {
         // NE
         for (int x = from.x() + 1, y = from.y() + 1;
-              x < to.x(); x++, y++) {
-            if (positions[x][y].getPiece() != null) {
-              path.add(positions[x][y].getSquare());
-            }
+             x < to.x(); x++, y++) {
+          if (positions[x][y].getPiece() != null) {
+            path.add(positions[x][y].getSquare());
+          }
         }
       } else if ((from.x() < to.x()) && (from.y() > to.y())  ){
         // SE
@@ -209,45 +250,6 @@ public class Board implements Cloneable {
     return path;
   }
 
-  public void validate(Position current, Position candidate) {
-    boolean castling = false;
-    if (current.getPiece() == null) {
-      throw new NoPieceAtPositionException("No piece to move at " + current);
-    } else {
-      if (candidate.getPiece() != null
-          && candidate.getPiece().getPlayer() == current.getPiece().getPlayer()) {
-        if (current.getPiece() instanceof Rook &&
-            candidate.getPiece() instanceof King) {
-          // TODO Bad smell altering board state in validate
-
-          if (current.getSquare().x() > candidate.getSquare().x()) {
-
-            candidate.getSquare().getBoard().positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
-                .setPiece(candidate.getPiece());
-          } else {
-            candidate.getSquare().getBoard().positions[candidate.getSquare().x() - 1][candidate.getSquare().y()]
-                .setPiece(candidate.getPiece());
-          }
-          castling = true;
-        } else {
-          throw new PositionOccupiedBySelfException(
-              "Player already occupies " + candidate);
-        }
-      }
-    }
-
-    current.getPiece().validate(current, candidate);
-
-    if (!(current.getPiece() instanceof Knight
-        || current.getPiece() instanceof King)) {
-      List<Square> path = getPath(current.getSquare(), candidate.getSquare());
-      if (!path.isEmpty()) {
-        if (!(castling && path.size() == 1)) {
-          throw new InvalidPieceMoveException("Piece may not jump others " + path);
-        }
-      }
-    }
-  }
 
   public Position getPosition(String squareName) {
     Square s = new Square(this, squareName);

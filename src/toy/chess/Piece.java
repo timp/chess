@@ -55,7 +55,7 @@ public abstract class Piece implements Cloneable {
     return result;
   }
 
-  public abstract void validate(Position from, Position to);
+  public abstract void perform(Position from, Position to);
 
   protected abstract Object clone();
 }

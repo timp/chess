@@ -36,7 +36,6 @@ public class Game {
 
   public void play() throws IOException {
     Board board = new Board();
-    //TODO Use Player
     String player = "1";
     try {
       while (true) {

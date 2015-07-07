@@ -15,7 +15,7 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public void validate(Position from, Position to) {
+  public void perform(Position from, Position to) {
 
     int distance = (to.getSquare().y() - from.getSquare().y())
         * from.getPiece().getPlayer().direction;
@@ -27,7 +27,6 @@ public class Pawn extends Piece {
             if (b.getEnPassantCandidate() != null)
               if (b.getEnPassantCandidate().getSquare().y() ==
                   (to.getSquare().y() + b.getEnPassantCandidate().getPiece().getPlayer().getDirection())) {
-                // TODO Bad smell altering board state in validate
                 b.getEnPassantCandidate().setPiece(null);
                 return;
               } else {

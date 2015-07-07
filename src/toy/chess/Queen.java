@@ -16,7 +16,7 @@ public class Queen extends Piece {
 
   /** Any unobstructed horizontal, vertical or diagonal move of any length.*/
   @Override
-  public void validate(Position from, Position to) {
+  public void perform(Position from, Position to) {
     if ((
         Math.abs(to.getSquare().x() - from.getSquare().x())
             == Math.abs(to.getSquare().y() - from.getSquare().y()))

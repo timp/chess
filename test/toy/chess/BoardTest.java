@@ -28,7 +28,7 @@ public class BoardTest extends TestCase {
   public void testValidateNoPieceOnSquareFrom() {
     Board it = new Board();
     try {
-      it.validate(new Position(new Square(it, "d4")),
+      it.perform(new Position(new Square(it, "d4")),
           new Position(new Square(it, "e5")));
       fail("Should have bombed");
     } catch (NoPieceAtPositionException e) { }

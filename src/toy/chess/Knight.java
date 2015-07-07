@@ -15,7 +15,7 @@ public class Knight extends Piece {
   }
 
   @Override
-  public void validate(Position from, Position to) {
+  public void perform(Position from, Position to) {
     if (!getPossibleMoves(from.getSquare()).contains(to.getSquare())) {
       throw new InvalidPieceMoveException(
           " A " + getName() + " can only move two squares in one direction and one in another");

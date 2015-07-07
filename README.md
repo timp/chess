@@ -18,7 +18,7 @@ The system does not implement the threefold repetition rule as that requires an 
 
 
 ## To Do 
- - Determine whether a move puts opposing King in Check
  - Determine if a move would place a player's own King in Check
+ - Determine whether a move puts opposing King in Check
  - Determine Checkmate
  
