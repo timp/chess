@@ -15,16 +15,16 @@ of functionality.
 ## System Capabilities
 
 The system reads a file of moves and applies them to a correctly setup board.
-The system will only allow valid moves for pieces, it ensures a move path is free of other pieces for Queen, Bishop, Rook and Pawn
-The system will recognise all valid chess moves:
+
+The system will recognise all valid chess moves including :
  - En Passant capture
  - Castling
  - Queening
+ 
+The system will 
  - Determine whether a move puts opposing King in Check
  - Determine whether a check is checkmate
  - Determine if a move would place a player's own King in Check and disallow it
-
-The system does not implement the threefold repetition rule as that requires an appeal which cannot be coded in the move language. 
 
 The system has a simple mechanism for checking move validity: 
 all possible moves for a piece in that position on an empty board 
@@ -36,6 +36,10 @@ piece would land on a King's square.
 To check for check mate all possible moves are evaluated, 
 though importantly not checked for check mate, and if none 
 are legal then the player is in check mate.  
+
+
+The system does not implement the threefold repetition rule as that requires an appeal which cannot be coded in the move language. 
+
 
 ## Conclusion
 The initial, given, interface implementation leaked its internal representation 
