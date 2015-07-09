@@ -15,8 +15,9 @@ public class Pawn extends Piece {
     abbreviation = "p";
   }
 
+  // TODO this should not change the state of the board
   @Override
-  public void perform(Position from, Position to) {
+  public void assertIsPossible(Position from, Position to) {
 
     int distance = (to.getSquare().y() - from.getSquare().y())
         * from.getPiece().getPlayer().direction;
@@ -89,7 +90,7 @@ public class Pawn extends Piece {
 
     // The other possible moves are contingent on the square being
     // occupied by the opponent
-    // TODO Should they be added here?
+    // TODO They should be added here as they may take player out of check
 
     return moves;
   }

@@ -52,10 +52,6 @@ public class KingTest extends TestCase {
       it.m("e2h7");
       fail("should have bombed");
     } catch (InvalidPieceMoveException e) { }
-
   }
 
-  public void testCannotMoveIntoCheck() {
-  // TODO this will be big!
-  }
 }

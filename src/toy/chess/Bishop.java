@@ -15,15 +15,10 @@ public class Bishop extends Piece {
     abbreviation = "b";
   }
 
-
   @Override
-  public void perform(Position from, Position to) {
-    if (!(
-        Math.abs(to.getSquare().x() - from.getSquare().x())
-            == Math.abs(to.getSquare().y() - from.getSquare().y()))
-    ) {
-      throw new InvalidPieceMoveException(
-          "A " + getName() + " must move diagonally");
+  public void assertIsPossible(Position from, Position to) {
+    if (! getPossibleMoves(from.getSquare()).contains(to)) {
+      throw new InvalidPieceMoveException("A " + getName() + " must move diagonally");
     }
   }
 

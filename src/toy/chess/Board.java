@@ -20,7 +20,7 @@ public class Board implements Cloneable {
   private Player player;
   private Player checkedPlayer;
   private Player checkmatedPlayer;
-checkmatecheckmate  private Position enPassantCandidate;
+  private Position enPassantCandidate;
   private boolean moveWasCastle;
 
   public Board() {
@@ -126,7 +126,6 @@ checkmatecheckmate  private Position enPassantCandidate;
           "No piece to move at " + from.getSquare());
     }
 
-    System.err.println(from + ": [" + fromSquare.x() + "][" + fromSquare.y() + "]");
     if (firstMover == null) {
       nextBoard.firstMover = from.getPiece().getPlayer();
     }
@@ -134,7 +133,6 @@ checkmatecheckmate  private Position enPassantCandidate;
 
     perform(from, to);
 
-    System.err.println("Check for check for move " + move);
     nextBoard.checkedPlayer = null;
     for (Position p : nextBoard.getOccupiedPositions()) {
       for (Position poss : p.getPiece().getPossibleMoves(p.getSquare())) {
@@ -145,10 +143,8 @@ checkmatecheckmate  private Position enPassantCandidate;
             String killerMove = p.getSquare().toString() + poss.getSquare().toString();
             regicide.move(new MoveCode(killerMove), false);
             if (!regicide.moveWasCastle) {
-              System.err.println("Check from " + p + " due to " + killerMove);
               nextBoard.checkedPlayer = p.getPiece().getPlayer().getOpponent();
             }
-
           } catch (InvalidMoveException e) {}
         }
       }
@@ -160,21 +156,16 @@ checkmatecheckmate  private Position enPassantCandidate;
           throw new MoveIntoCheckException("A move cannot put that player into check " + fromTo);}
         else
         {
-          System.out.println(nextBoard.checkedPlayer + " in check");
           if (checkForMate) {
-            System.err.println("Check for mate for move " + move);
             Board escape = nextBoard.clone();
             boolean mated = true;
             for (Position p : escape.getPlayersPositions(escape.checkedPlayer)) {
               for (Position poss : p.getPiece().getPossibleMoves(p.getSquare())) {
                 try {
                   String outOfCheck = p.getSquare().toString() + poss.getSquare().toString();
-                  System.err.println("Trying " + outOfCheck);
                   escape.move(new MoveCode(outOfCheck), false);
                   mated = false;
-                } catch (InvalidMoveException e) {
-                  System.err.println("No escape\n");
-                }
+                } catch (InvalidMoveException e) { }
               }
             }
             if (mated) {
@@ -249,7 +240,7 @@ checkmatecheckmate  private Position enPassantCandidate;
 
     }
 
-    current.getPiece().perform(current, candidate);
+    current.getPiece().assertIsPossible(current, candidate);
 
     if (!(current.getPiece() instanceof Knight
         || current.getPiece() instanceof King)) {

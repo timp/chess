@@ -16,24 +16,15 @@ public class Queen extends Piece {
     abbreviation = "q";
   }
 
-  /** Any unobstructed horizontal, vertical or diagonal move of any length.*/
   @Override
-  public void perform(Position from, Position to) {
-    if ((
-        Math.abs(to.getSquare().x() - from.getSquare().x())
-            == Math.abs(to.getSquare().y() - from.getSquare().y()))
-        ) {
-      return;
+  public void assertIsPossible(Position from, Position to) {
+    if (! getPossibleMoves(from.getSquare()).contains(to)) {
+      throw new InvalidPieceMoveException(
+          "A " + getName() + " must move diagonally or in straight lines");
     }
-    if ((from.getSquare().x() == to.getSquare().x() ||
-        from.getSquare().y() == to.getSquare().y())) {
-      return;
-    }
-    throw new InvalidPieceMoveException(
-        "A " + getName() + " must move diagonally or in straight lines");
-
   }
 
+  /** Any unobstructed horizontal, vertical or diagonal move of any length.*/
   @Override
   public List<Position> getPossibleMoves(Square from) {
     ArrayList<Position> moves = new ArrayList<>(8);

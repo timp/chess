@@ -57,10 +57,13 @@ public abstract class Piece implements Cloneable {
     return result;
   }
 
-  public abstract void perform(Position from, Position to);
+  public abstract void assertIsPossible(Position from, Position to);
 
   public abstract List<Position> getPossibleMoves(Square from);
-  /** Deliberately does not declare CloneNotSupportedException as we do not want the noise. */
+
+  /** Deliberately does not declare CloneNotSupportedException
+   * as we do not want the noise.
+   */
   protected abstract Object clone();
 
 }

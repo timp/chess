@@ -61,8 +61,12 @@ public class Game {
       }
     } catch (NoMoreMovesException eof) {
       System.out.println("End of file");
-      if (board.getCheckmatedPlayer() != null) {
-        System.out.println(board.getCheckmatedPlayer() + " in check mate");
+      if (board.getCheckedPlayer() != null) {
+        if (board.getCheckmatedPlayer() == null) {
+          System.out.println(board.getCheckedPlayer() + " in check");
+        } else {
+          System.out.println(board.getCheckmatedPlayer() + " in check mate");
+        }
       } else {
         System.out.println(board.getPlayer() + " to move");
       }
