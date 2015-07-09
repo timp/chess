@@ -14,6 +14,8 @@ public class Game {
   private int lineNumber = 0;
   private String fileName;
 
+  private Board board = null;
+
   public Game(String fileName) throws IOException {
     this.fileName = fileName;
     this.inputReader = new BufferedReader(new FileReader(this.fileName));
@@ -35,23 +37,22 @@ public class Game {
   }
 
   public void play() throws IOException {
-    Board board = new Board();
+    board = new Board();
     String player = "1";
     try {
       while (true) {
         MoveCode mc = nextMove();
-
         try {
-          board = board.move(mc);
+          board = board.move(mc, true);
         } catch (InvalidMoveException e) {
           throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
         }
         System.out.print("Player " + player + " (");
         if (player.equals("1")) {
-          System.out.print(board.getPlayer1());
+          System.out.print(board.getFirstMover());
           player = "2";
         } else {
-          System.out.print(board.getPlayer2());
+          System.out.print(board.getFirstMover().getOpponent());
           player = "1";
         }
         System.out.println(") : move from " + mc.from() +
@@ -59,10 +60,19 @@ public class Game {
         System.out.println(board.toString());
       }
     } catch (NoMoreMovesException eof) {
-      System.out.println("Game over");
+      System.out.println("End of file");
+      if (board.getCheckmatedPlayer() != null) {
+        System.out.println(board.getCheckmatedPlayer() + " in check mate");
+      } else {
+        System.out.println(board.getPlayer() + " to move");
+      }
     }
-
   }
+
+  public Board getBoard() {
+    return board;
+  }
+
   public static void main(String[] args) throws IOException {
     System.out.println("Playing game from file " + args[0]);
     new Game(args[0]).play();

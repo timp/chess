@@ -1,5 +1,8 @@
 package toy.chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author timp
  * @since 2015/06/29
@@ -34,6 +37,21 @@ public class King extends Piece {
         + Math.abs(from.getSquare().y() - to.getSquare().y()));
       }
     }
+  }
+
+  @Override
+  public List<Position> getPossibleMoves(Square from) {
+    ArrayList<Position> moves = new ArrayList<>(8);
+    from.getBoard().addIfStillOnBoard(moves, from.x()+1, from.y());
+    from.getBoard().addIfStillOnBoard(moves, from.x()+1, from.y()+1);
+    from.getBoard().addIfStillOnBoard(moves, from.x(), from.y()+1);
+    from.getBoard().addIfStillOnBoard(moves, from.x()-1, from.y()+1);
+    from.getBoard().addIfStillOnBoard(moves, from.x()-1, from.y());
+    from.getBoard().addIfStillOnBoard(moves, from.x()-1, from.y()-1);
+    from.getBoard().addIfStillOnBoard(moves, from.x(), from.y()-1);
+    from.getBoard().addIfStillOnBoard(moves, from.x()+1, from.y()-1);
+
+    return moves;
   }
 
   @Override

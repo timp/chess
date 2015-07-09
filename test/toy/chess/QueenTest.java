@@ -54,7 +54,9 @@ public class QueenTest extends TestCase {
 
 
     it = it.m("b1a3").m("b8a6");
-    it = it.m("g1h3").m("g8h6");
+
+    it = it.m("g1h3");
+    it = it.m("g8h6");
 
     try {
       it.m("d1b1");

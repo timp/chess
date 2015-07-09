@@ -28,8 +28,7 @@ public class BoardTest extends TestCase {
   public void testValidateNoPieceOnSquareFrom() {
     Board it = new Board();
     try {
-      it.perform(new Position(new Square(it, "d4")),
-          new Position(new Square(it, "e5")));
+      it.m("d4e5");
       fail("Should have bombed");
     } catch (NoPieceAtPositionException e) { }
   }
@@ -99,6 +98,31 @@ public class BoardTest extends TestCase {
   public void testHashCode() {
     Board it = new Board();
     assertEquals(1658276767, it.hashCode());
+  }
+
+
+  public void testOnlyMoveOutOfCheckAllowed() {
+    Board it = new Board();
+    it = it.m("b1a3").m("h7h6");
+    it = it.m("a3c4").m("h6h5");
+    it = it.m("c4d6");
+    try {
+      it.m("h5h4");
+    } catch (StillInCheckException e) {}
+    it.m("e7d6");
+
+  }
+
+  public void testOccupiedPositions() {
+    Board it = new Board();
+    assertEquals("[A1 White Rook, A2 White Pawn, A7 Black Pawn, A8 Black Rook, B1 White Knight, B2 White Pawn, B7 Black Pawn, B8 Black Knight, C1 White Bishop, C2 White Pawn, C7 Black Pawn, C8 Black Bishop, D1 White Queen, D2 White Pawn, D7 Black Pawn, D8 Black Queen, E1 White King, E2 White Pawn, E7 Black Pawn, E8 Black King, F1 White Bishop, F2 White Pawn, F7 Black Pawn, F8 Black Bishop, G1 White Knight, G2 White Pawn, G7 Black Pawn, G8 Black Knight, H1 White Rook, H2 White Pawn, H7 Black Pawn, H8 Black Rook]",
+        it.getOccupiedPositions().toString());
+  }
+
+  public void testPlayersOccupiedPositions() {
+    Board it = new Board();
+    assertEquals("[A1 White Rook, A2 White Pawn, B1 White Knight, B2 White Pawn, C1 White Bishop, C2 White Pawn, D1 White Queen, D2 White Pawn, E1 White King, E2 White Pawn, F1 White Bishop, F2 White Pawn, G1 White Knight, G2 White Pawn, H1 White Rook, H2 White Pawn]",
+        it.getPlayersPositions(Player.WHITE).toString());
   }
 
 }

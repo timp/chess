@@ -1,6 +1,7 @@
 package toy.chess;
 
-import static toy.chess.Player.BLACK;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author timp
@@ -75,6 +76,22 @@ public class Pawn extends Piece {
             "A " + getName() + " may only move one square forward once moved (" + distance + ")");
     }
 
+  }
+
+  @Override
+  public List<Position> getPossibleMoves(Square from) {
+    ArrayList<Position> moves = new ArrayList<>();
+    from.getBoard().addIfStillOnBoard(moves, from.x(), from.y() + player.direction);
+    if (from.x() * player.direction == 1
+        || from.x() * player.direction == -6) {
+      from.getBoard().addIfStillOnBoard(moves, from.x(), from.y() + 2 * player.direction);
+    }
+
+    // The other possible moves are contingent on the square being
+    // occupied by the opponent
+    // TODO Should they be added here?
+
+    return moves;
   }
 
   @Override

@@ -20,4 +20,8 @@ public class MoveCode {
   public SquareCode to() {
     return new SquareCode(code.substring(2));
   }
+  @Override
+  public String toString(){
+    return code;
+  }
 }

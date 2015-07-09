@@ -1,6 +1,7 @@
 package toy.chess;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author timp
@@ -16,29 +17,24 @@ public class Knight extends Piece {
 
   @Override
   public void perform(Position from, Position to) {
-    if (!getPossibleMoves(from.getSquare()).contains(to.getSquare())) {
+    if (!getPossibleMoves(from.getSquare()).contains(to)) {
       throw new InvalidPieceMoveException(
           " A " + getName() + " can only move two squares in one direction and one in another");
-
     }
   }
-  private ArrayList<Square> getPossibleMoves(Square from) {
-    ArrayList<Square> moves = new ArrayList<>(8);
-    addIfLegal(moves, from.getBoard(), from.x()+1, from.y()+2);
-    addIfLegal(moves, from.getBoard(), from.x()+2, from.y()+1);
-    addIfLegal(moves, from.getBoard(), from.x()+2, from.y()-1);
-    addIfLegal(moves, from.getBoard(), from.x()+1, from.y()-2);
-    addIfLegal(moves, from.getBoard(), from.x() - 1, from.y() - 2);
-    addIfLegal(moves, from.getBoard(), from.x()-2, from.y()-1);
-    addIfLegal(moves, from.getBoard(), from.x()-2, from.y()+1);
-    addIfLegal(moves, from.getBoard(), from.x()-1, from.y()+2);
-    return moves;
-  }
 
-  private void addIfLegal(ArrayList<Square> moves, Board board, int x, int y) {
-    try {
-      moves.add(new Square(board, x, y));
-    } catch (InvalidChessCoordinateException ignore) {}
+  @Override
+  public List<Position> getPossibleMoves(Square from) {
+    ArrayList<Position> moves = new ArrayList<>(8);
+    from.getBoard().addIfStillOnBoard(moves, from.x() + 1, from.y() + 2);
+    from.getBoard().addIfStillOnBoard(moves, from.x() + 2, from.y() + 1);
+    from.getBoard().addIfStillOnBoard(moves, from.x() + 2, from.y() - 1);
+    from.getBoard().addIfStillOnBoard(moves, from.x() + 1, from.y() - 2);
+    from.getBoard().addIfStillOnBoard(moves, from.x() - 1, from.y() - 2);
+    from.getBoard().addIfStillOnBoard(moves, from.x() - 2, from.y() - 1);
+    from.getBoard().addIfStillOnBoard(moves, from.x() - 2, from.y() + 1);
+    from.getBoard().addIfStillOnBoard(moves, from.x() - 1, from.y() + 2);
+    return moves;
   }
 
   @Override

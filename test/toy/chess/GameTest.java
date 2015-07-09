@@ -23,7 +23,11 @@ public class GameTest extends TestCase {
   }
 
   public void testQuickCheckmateMoves() throws Exception {
-    Game.main(new String[]{"data/quick-checkmate.txt"});
+    Game g = new Game("data/quick-checkmate.txt");
+    g.play();
+    assertEquals(Player.BLACK, g.getBoard().getCheckedPlayer());
+    assertEquals(Player.BLACK, g.getBoard().getPlayer());
+    assertEquals(Player.BLACK, g.getBoard().getCheckmatedPlayer());
   }
 
   public void testInvalidCode() throws Exception {

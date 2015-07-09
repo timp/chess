@@ -30,7 +30,8 @@ public class Position implements Cloneable {
     this.piece = piece;
   }
   public String toString() {
-    return square.toString() + " " + (piece == null ? " " : piece.getName());
+    return square.toString() + " " + (piece == null ? " " :
+        piece.getPlayer() + " " + piece.getName());
   }
   public String pic() {
     return piece == null ? " " : piece.getAbbreviation();

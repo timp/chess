@@ -1,6 +1,8 @@
 package toy.chess;
 
-import static toy.chess.Player.BLACK;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author timp
@@ -32,6 +34,22 @@ public class Queen extends Piece {
 
   }
 
+  @Override
+  public List<Position> getPossibleMoves(Square from) {
+    ArrayList<Position> moves = new ArrayList<>(8);
+    for (int i = 1; i < 8; i++) {
+      from.getBoard().addIfStillOnBoard(moves, from.x() + i, from.y() + i);
+      from.getBoard().addIfStillOnBoard(moves, from.x() + i, from.y() - i);
+      from.getBoard().addIfStillOnBoard(moves, from.x() - i, from.y() - i);
+      from.getBoard().addIfStillOnBoard(moves, from.x() - i, from.y() + i);
+
+      from.getBoard().addIfStillOnBoard(moves, from.x(), from.y() + i);
+      from.getBoard().addIfStillOnBoard(moves, from.x(), from.y() - i);
+      from.getBoard().addIfStillOnBoard(moves, from.x() + i, from.y());
+      from.getBoard().addIfStillOnBoard(moves, from.x() - i, from.y());
+    }
+    return moves;
+  }
 
   @Override
   public Object clone() {
