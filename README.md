@@ -1,7 +1,10 @@
 # Chess move validator
 
 This exercise was set as an interview test, with a time limit of four hours.
-It has taken considerably more. 
+I decided to embrace being [nerd sniped](https://xkcd.com/356/) and 
+see what it would take develop a solution, without researching other solutions.
+It is a fair sized toy problem, suitable for a college term assignment and 
+has taken me two weeks elapsed time, probably around 40 hours.
 
 The exercise was taken without reference to how the problem 
 has previously been addressed. The development methodology was 
