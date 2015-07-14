@@ -15,7 +15,9 @@ public class Pawn extends Piece {
     abbreviation = "p";
   }
 
-  // TODO this should not change the state of the board
+  /**
+   * Note that this changes the state of the board if en passant.
+   */
   @Override
   public void assertIsPossible(Position from, Position to) {
 
@@ -25,7 +27,7 @@ public class Pawn extends Piece {
       if (from.getSquare().file != to.getSquare().file) {
         if (Math.abs(from.getSquare().x() - to.getSquare().x()) == 1) {
           if (to.getPiece() == null) {
-            Board b = to.getSquare().getBoard();
+            Board b = to.getBoard();
             if (b.getEnPassantCandidate() != null)
               if (b.getEnPassantCandidate().getSquare().y() ==
                   (to.getSquare().y() + b.getEnPassantCandidate().getPiece().getPlayer().getDirection())) {
@@ -64,7 +66,7 @@ public class Pawn extends Piece {
         } else {
           // Opponents next move may be en passant
           // We need to record that against the Board
-          from.getSquare().getBoard().setEnPassantCandidate(to);
+          from.getBoard().setEnPassantCandidate(to);
           return;
         }
       } else {
@@ -80,17 +82,19 @@ public class Pawn extends Piece {
   }
 
   @Override
-  public List<Position> getPossibleMoves(Square from) {
+  public List<Position> getPossibleMoves(Board board, Square from) {
     ArrayList<Position> moves = new ArrayList<>();
-    from.getBoard().addIfStillOnBoard(moves, from.x(), from.y() + player.direction);
+    board.addIfStillOnBoard(moves, from.x(), from.y() + player.direction);
     if (from.x() * player.direction == 1
         || from.x() * player.direction == -6) {
-      from.getBoard().addIfStillOnBoard(moves, from.x(), from.y() + 2 * player.direction);
+      board.addIfStillOnBoard(moves, from.x(), from.y() + 2 * player.direction);
     }
 
-    // The other possible moves are contingent on the square being
-    // occupied by the opponent
-    // TODO They should be added here as they may take player out of check
+    // Capturing moves
+    board.addIfStillOnBoard(moves, from.x() + 1,
+        from.y() + player.direction);
+    board.addIfStillOnBoard(moves, from.x() + 1,
+        from.y() + player.direction);
 
     return moves;
   }

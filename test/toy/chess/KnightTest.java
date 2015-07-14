@@ -22,12 +22,16 @@ public class KnightTest extends TestCase {
 
     it = it.m("c4d6");
     it = it.m("h4h3");
-    it = it.m("d6c4").m("g6h5");
-    it = it.m("c4e3").m("g7g6");
+    it = it.m("d6c4");
+    it = it.m("g6h5");
+    it = it.m("c4e3");
+
+    it = it.m("g7g6");
     it = it.m("e3c4").m("g6g5");
     it = it.m("b2b4").m("g5g4");
     it = it.m("c4b2").m("g4g3");
-    it = it.m("b2d3").m("f2f3");
+    it = it.m("b2d3");
+    it.m("f5f4");
   }
   public void testIllegalMove() {
     Board it = new Board();

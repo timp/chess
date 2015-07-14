@@ -17,19 +17,19 @@ public class Bishop extends Piece {
 
   @Override
   public void assertIsPossible(Position from, Position to) {
-    if (! getPossibleMoves(from.getSquare()).contains(to)) {
+    if (! from.getPossibleMoves().contains(to)) {
       throw new InvalidPieceMoveException("A " + getName() + " must move diagonally");
     }
   }
 
   @Override
-  public List<Position> getPossibleMoves(Square from) {
+  public List<Position> getPossibleMoves(Board board, Square from) {
     ArrayList<Position> moves = new ArrayList<>();
     for (int i = 1; i < 8; i++) {
-      from.getBoard().addIfStillOnBoard(moves, from.x() + i, from.y() + i);
-      from.getBoard().addIfStillOnBoard(moves, from.x() + i, from.y() - i);
-      from.getBoard().addIfStillOnBoard(moves, from.x() - i, from.y() - i);
-      from.getBoard().addIfStillOnBoard(moves, from.x() - i, from.y() + i);
+      board.addIfStillOnBoard(moves, from.x() + i, from.y() + i);
+      board.addIfStillOnBoard(moves, from.x() + i, from.y() - i);
+      board.addIfStillOnBoard(moves, from.x() - i, from.y() - i);
+      board.addIfStillOnBoard(moves, from.x() - i, from.y() + i);
     }
     return moves;
   }

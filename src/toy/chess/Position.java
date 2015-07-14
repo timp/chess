@@ -1,5 +1,7 @@
 package toy.chess;
 
+import java.util.List;
+
 /**
  * A position on a Chess board.
  *
@@ -8,17 +10,19 @@ package toy.chess;
  */
 public class Position implements Cloneable {
 
+  Board board = null;
   Square square = null;
   Piece piece = null;
 
-  public Position(Square s) {
-    this(s, null);
+  public Position(Board board, Square s) {
+    this(board, s, null);
   }
 
   // Used by clone
   private Position() {}
 
-  public Position(Square square, Piece piece) {
+  public Position(Board board, Square square, Piece piece) {
+    this.board = board;
     this.square = square;
     this.piece = piece;
   }
@@ -39,6 +43,9 @@ public class Position implements Cloneable {
   public Square getSquare() {
     return square;
   }
+  public Board getBoard() {
+    return board;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -46,8 +53,12 @@ public class Position implements Cloneable {
     if (o == null || getClass() != o.getClass()) return false;
 
     Position position = (Position) o;
-
-    if (!square.equals(position.square)) {
+ /*
+    if (!board.equals(position.getBoard())) {
+      return false;
+    }
+    */
+    if (!square.equals(position.getSquare())) {
       return false;
     }
     return !(piece != null ? !piece.equals(position.piece)
@@ -57,7 +68,8 @@ public class Position implements Cloneable {
 
   @Override
   public int hashCode() {
-    int result = square.hashCode();
+    int result = board.getMoveNumber() + 1;
+    result = 31 * result + square.hashCode();
     result = 31 * result + (piece != null ? piece.hashCode() : 0);
     return result;
   }
@@ -72,4 +84,7 @@ public class Position implements Cloneable {
     return newPosition;
   }
 
+  public List<Position> getPossibleMoves() {
+    return getPiece().getPossibleMoves(board, getSquare());
+  }
 }

@@ -26,33 +26,39 @@ public class QueenTest extends TestCase {
   }
 
   public void testPathIsEmpty() {
-    Board it = new Board();
+    Board it;
     try {
+      it = new Board();
       it.m("d1b3");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
     try {
+      it = new Board();
       it.m("d1d3");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
     try {
+      it = new Board();
       it.m("d1f3");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
     try {
+      it = new Board();
       it.m("d8f6");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
     try {
+      it = new Board();
       it.m("d8d6");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
     try {
+      it = new Board();
       it.m("d8b6");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
 
-
+    it = new Board();
     it = it.m("b1a3").m("b8a6");
 
     it = it.m("g1h3");
@@ -67,6 +73,8 @@ public class QueenTest extends TestCase {
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}
     try {
+      // Ensure it is Black's turn
+      it = it.m("e2e3");
       it.m("d8g8");
       fail("Should have bombed");
     } catch (InvalidPieceMoveException e) {}

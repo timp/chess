@@ -23,15 +23,21 @@ public class Game {
 
   public MoveCode nextMove()
       throws CodeFormatException, NoMoreMovesException, IOException {
-    String code = this.inputReader.readLine();
-    this.lineNumber++;
-    if (code == null) {
-      throw new NoMoreMovesException();
-    } else {
-      try {
-        return new MoveCode(code);
-      } catch (CodeFormatException e) {
-        throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
+    String code;
+    while (true) {
+      this.lineNumber++;
+      code = this.inputReader.readLine();
+      if (code == null) {
+        throw new NoMoreMovesException();
+      } else {
+        // Allow comments and PGN  notes
+        if (!(code.startsWith("#") || code.startsWith("["))) {
+          try {
+            return new MoveCode(code);
+          } catch (CodeFormatException e) {
+            throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
+          }
+        }
       }
     }
   }
@@ -44,19 +50,14 @@ public class Game {
         MoveCode mc = nextMove();
         try {
           board = board.move(mc, true);
-        } catch (InvalidMoveException e) {
+        } catch (Exception e) {
           throw new CodeLineException(this.fileName + ":" + this.lineNumber, e);
         }
-        System.out.print("Player " + player + " (");
-        if (player.equals("1")) {
-          System.out.print(board.getFirstMover());
-          player = "2";
-        } else {
-          System.out.print(board.getFirstMover().getOpponent());
-          player = "1";
-        }
-        System.out.println(") : move from " + mc.from() +
-            " to " + mc.to());
+        System.out.println("Move " + board.getMoveNumber()
+            + " " + board.getPlayer()
+            + " " + board.getPosition(mc.to().toString()).getPiece().getName()
+            + " from " + mc.from()
+            + " to " + mc.to());
         System.out.println(board.toString());
       }
     } catch (NoMoreMovesException eof) {

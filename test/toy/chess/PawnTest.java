@@ -73,7 +73,7 @@ public class PawnTest extends TestCase {
       .m("c5c6").m("c8e6")
       .m("c6c7").m("e6g4")
       .m("c7c8");// Queen
-    assertEquals("q", queened.pieceAt("c8").getAbbreviation());
+    assertEquals("q", queened.getPosition("c8").getPiece().getAbbreviation());
   }
 
   public void testSquareUnoccupiedWhenNotCapturing() {

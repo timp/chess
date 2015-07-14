@@ -25,8 +25,8 @@ public class GameTest extends TestCase {
   public void testQuickCheckmateMoves() throws Exception {
     Game g = new Game("data/quick-checkmate.txt");
     g.play();
+    assertEquals(Player.WHITE, g.getBoard().getPlayer());
     assertEquals(Player.BLACK, g.getBoard().getCheckedPlayer());
-    assertEquals(Player.BLACK, g.getBoard().getPlayer());
     assertEquals(Player.BLACK, g.getBoard().getCheckmatedPlayer());
   }
 
@@ -38,4 +38,19 @@ public class GameTest extends TestCase {
       assertTrue(e.getCause() instanceof CodeFormatException);
     }
   }
+
+  public void testKasparovsImortal1999() throws Exception {
+    Game.main(new String[]{"data/Kasparovs-Immortal-1999.txt"});
+  }
+
+  public void testEndOncheck() throws Exception {
+    Game g = new Game("data/endOnCheck.txt");
+    g.play();
+    assertEquals(Player.BLACK, g.getBoard().getPlayer());
+    assertEquals(Player.BLACK, g.getBoard().getCheckedPlayer());
+    assertNull(g.getBoard().getCheckmatedPlayer());
+  }
+
+
+
 }

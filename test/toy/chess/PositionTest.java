@@ -9,13 +9,13 @@ import junit.framework.TestCase;
 public class PositionTest extends TestCase {
   public void  testEquals() throws Exception {
     Board b = new Board();
-    Position p = new Position(new Square(b, "a1"));
+    Position p = new Position(b, new Square("a1"));
     assertTrue(p.equals(p.clone()));
-    assertEquals(0, p.hashCode());
+    assertTrue(String.valueOf(p.hashCode()), p.hashCode() > 0);
 
-    Position p2 = new Position(new Square(b, "a2"));
+    Position p2 = new Position(b, new Square("a2"));
     assertFalse(p.equals(p2));
-    assertEquals(961, p2.hashCode());
+    assertTrue(p.hashCode() > 0);
 
     assertTrue(p.hashCode() != p2.hashCode());
 
@@ -23,9 +23,9 @@ public class PositionTest extends TestCase {
 
   public void testHashCode() throws Exception {
     Board b = new Board();
-    Position p = new Position(new Square(b, "a1"));
+    Position p = new Position(b, new Square("a1"));
     assertTrue(p.equals(p.clone()));
-    Position p2 = new Position(new Square(b, "a2"));
+    Position p2 = new Position(b, new Square("a2"));
     assertFalse(p.equals(p2));
   }
 }

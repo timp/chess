@@ -14,14 +14,14 @@ public class Board implements Cloneable {
 
   private Position[][] positions = null;
 
-  private int move = 1;
+  private int moveNumber = 0;
 
-  private Player firstMover;
   private Player player;
   private Player checkedPlayer;
   private Player checkmatedPlayer;
   private Position enPassantCandidate;
-  private boolean moveWasCastle;
+
+  private Square castleSquare;
 
   public Board() {
     this(new Position[8][8]);
@@ -34,56 +34,52 @@ public class Board implements Cloneable {
 
   private void setup() {
     // First square (a1 or 0,0) must be black and occupied by White
-    positions[0][0] = new Position(new Square(this, "a1"), new Rook(Player.WHITE));
+    positions[0][0] = new Position(this, new Square("a1"), new Rook(Player.WHITE));
     // white
-    positions[1][0] = new Position(new Square(this, "b1"), new Knight(Player.WHITE));
+    positions[1][0] = new Position(this, new Square("b1"), new Knight(Player.WHITE));
     // black
-    positions[2][0] = new Position(new Square(this, "c1"), new Bishop(Player.WHITE));
+    positions[2][0] = new Position(this, new Square("c1"), new Bishop(Player.WHITE));
     // Queen on her own colour
     // white
-    positions[3][0] = new Position(new Square(this, "d1"), new Queen(Player.WHITE));
-    positions[4][0] = new Position(new Square(this, "e1"), new King(Player.WHITE));
-    positions[5][0] = new Position(new Square(this, "f1"), new Bishop(Player.WHITE));
-    positions[6][0] = new Position(new Square(this, "g1"), new Knight(Player.WHITE));
-    positions[7][0] = new Position(new Square(this, "h1"), new Rook(Player.WHITE));
+    positions[3][0] = new Position(this, new Square("d1"), new Queen(Player.WHITE));
+    positions[4][0] = new Position(this, new Square("e1"), new King(Player.WHITE));
+    positions[5][0] = new Position(this, new Square("f1"), new Bishop(Player.WHITE));
+    positions[6][0] = new Position(this, new Square("g1"), new Knight(Player.WHITE));
+    positions[7][0] = new Position(this, new Square("h1"), new Rook(Player.WHITE));
 
     for (int x = 0; x < 8; x++) {
       positions[x][1] = new Position(
-          new Square(this, File.names()[x] + "2"), new Pawn(Player.WHITE));
+          this, new Square(File.names()[x] + "2"), new Pawn(Player.WHITE));
     }
 
 
     for (int y = 2; y < 6; y++) {
       for (int x = 0; x < 8; x++) {
         positions[x][y] = new Position(
-            new Square(this, File.names()[x] + Rank.names()[y]));
+            this, new Square(File.names()[x] + Rank.names()[y]));
       }
     }
 
     for (int x = 0; x < 8; x++) {
       positions[x][6] = new Position(
-          new Square(this, File.names()[x] + "7"), new Pawn(Player.BLACK));
+          this, new Square(File.names()[x] + "7"), new Pawn(Player.BLACK));
     }
 
     // white
-    positions[0][7] = new Position(new Square(this, "a8"), new Rook(Player.BLACK));
+    positions[0][7] = new Position(this, new Square("a8"), new Rook(Player.BLACK));
     // black
-    positions[1][7] = new Position(new Square(this, "b8"), new Knight(Player.BLACK));
+    positions[1][7] = new Position(this, new Square("b8"), new Knight(Player.BLACK));
     // white
-    positions[2][7] = new Position(new Square(this, "c8"), new Bishop(Player.BLACK));
+    positions[2][7] = new Position(this, new Square("c8"), new Bishop(Player.BLACK));
     // black
     // queen on her own colour
-    positions[3][7] = new Position(new Square(this, "d8"), new Queen(Player.BLACK));
+    positions[3][7] = new Position(this, new Square("d8"), new Queen(Player.BLACK));
     // King on the opposite of his queen's colour
     // white
-    positions[4][7] = new Position(new Square(this, "e8"), new King(Player.BLACK));
-    positions[5][7] = new Position(new Square(this, "f8"), new Bishop(Player.BLACK));
-    positions[6][7] = new Position(new Square(this, "g8"), new Knight(Player.BLACK));
-    positions[7][7] = new Position(new Square(this, "h8"), new Rook(Player.BLACK));
-  }
-
-  public Player getFirstMover() {
-    return firstMover;
+    positions[4][7] = new Position(this, new Square("e8"), new King(Player.BLACK));
+    positions[5][7] = new Position(this, new Square("f8"), new Bishop(Player.BLACK));
+    positions[6][7] = new Position(this, new Square("g8"), new Knight(Player.BLACK));
+    positions[7][7] = new Position(this, new Square("h8"), new Rook(Player.BLACK));
   }
 
   public Player getPlayer() {
@@ -98,6 +94,13 @@ public class Board implements Cloneable {
     return checkmatedPlayer;
   }
 
+  public Square getCastleSquare() {
+    return castleSquare;
+  }
+
+  public int getMoveNumber() {
+    return moveNumber;
+  }
   public String names() {
     String pic = "";
     for (int y = 0; y < 8; y++) {
@@ -114,38 +117,53 @@ public class Board implements Cloneable {
   }
 
   public Board move(MoveCode fromTo, boolean checkForMate) {
-    Board nextBoard = clone();
-    Square fromSquare = new Square(nextBoard, fromTo.from());
-    Square toSquare = new Square(nextBoard, fromTo.to());
 
-    Position from = nextBoard.positions[fromSquare.x()][fromSquare.y()];
-    Position to = nextBoard.positions[toSquare.x()][toSquare.y()];
-
+    Square fromSquare = new Square(fromTo.from());
+    Position from = positions[fromSquare.x()][fromSquare.y()];
     if (from.getPiece() == null) {
       throw new NoPieceAtPositionException(
           "No piece to move at " + from.getSquare());
     }
 
-    if (firstMover == null) {
-      nextBoard.firstMover = from.getPiece().getPlayer();
+    Board nextBoard = clone();
+    nextBoard.player = from.getPiece().getPlayer();
+
+    Square toSquare = new Square(fromTo.to());
+    Position to = nextBoard.positions[toSquare.x()][toSquare.y()];
+    // we will be nulling the position piece during perform(moveNumber)
+    from = nextBoard.positions[fromSquare.x()][fromSquare.y()];
+
+    if (player == from.getPiece().getPlayer()) {
+      if (from.getPiece() instanceof King &&
+          castleSquare != null &&
+          castleSquare.equals(to.getSquare())) {
+        //player = from.getPiece().getPlayer();
+      } else {
+        throw new InvalidTurnException("Current turn is " + player.getOpponent()
+            + " from " + from
+            + (from.getBoard().castleSquare == null
+              ? "" :
+                " allowed castle square " + from.getBoard().castleSquare)
+        );
+      }
     }
-    nextBoard.player = from.getPiece().getPlayer().getOpponent();
 
-    perform(from, to);
+    nextBoard.perform(from, to);
 
+    // Check for check
     nextBoard.checkedPlayer = null;
     for (Position p : nextBoard.getOccupiedPositions()) {
-      for (Position poss : p.getPiece().getPossibleMoves(p.getSquare())) {
+      for (Position poss : p.getPossibleMoves()) {
         // Check whether possible move threatens either king
-        if (poss.getPiece() instanceof King) {
+        if (poss.getPiece() instanceof King
+            && poss.getPiece().getPlayer() != p.getPiece().getPlayer()) {
           Board regicide = nextBoard.clone();
+          regicide.nextPlayer();
           try {
             String killerMove = p.getSquare().toString() + poss.getSquare().toString();
             regicide.move(new MoveCode(killerMove), false);
-            if (!regicide.moveWasCastle) {
-              nextBoard.checkedPlayer = p.getPiece().getPlayer().getOpponent();
-            }
-          } catch (InvalidMoveException e) {}
+            nextBoard.checkedPlayer = p.getPiece().getPlayer().getOpponent();
+          } catch (InvalidMoveException e) { }
         }
       }
     }
@@ -153,19 +171,25 @@ public class Board implements Cloneable {
     if (checkedPlayer == null) {
       if (nextBoard.checkedPlayer != null) {
         if (nextBoard.checkedPlayer == to.getPiece().getPlayer()) {
-          throw new MoveIntoCheckException("A move cannot put that player into check " + fromTo);}
-        else
-        {
+          throw new MoveIntoCheckException(
+              "A move cannot put that player into check " + fromTo);
+        } else {
           if (checkForMate) {
-            Board escape = nextBoard.clone();
+            System.err.println("Checking for mate: " + fromTo);
+            Board nextNextBoard = nextBoard.clone();
             boolean mated = true;
-            for (Position p : escape.getPlayersPositions(escape.checkedPlayer)) {
-              for (Position poss : p.getPiece().getPossibleMoves(p.getSquare())) {
+            for (Position p : nextNextBoard.getPlayersPositions(nextNextBoard.checkedPlayer)) {
+              for (Position poss : p.getPossibleMoves()) {
                 try {
                   String outOfCheck = p.getSquare().toString() + poss.getSquare().toString();
-                  escape.move(new MoveCode(outOfCheck), false);
-                  mated = false;
-                } catch (InvalidMoveException e) { }
+                  Board result = nextNextBoard.move(new MoveCode(outOfCheck), false);
+                  if ( result.checkedPlayer == null) {
+                    mated = false;
+                    System.err.println("There is escape: " + outOfCheck);
+                    System.err.println(" " + moveNumber +
+                        " escaped check: " + result.checkedPlayer);
+                  }
+                } catch (InvalidMoveException e) {}
               }
             }
             if (mated) {
@@ -175,12 +199,99 @@ public class Board implements Cloneable {
         }
       }
     } else {
-      if (nextBoard.checkedPlayer != null
-          && nextBoard.checkedPlayer == to.getPiece().getPlayer()) {
-        throw new StillInCheckException("When in check only a move out of check is allowed");
+      System.err.println(" " + moveNumber + " " + fromTo + " " + player + " is still in check");
+      if (nextBoard.checkedPlayer != null) {
+        if (nextBoard.checkedPlayer == to.getPiece().getPlayer()) {
+          throw new StillInCheckException("When in check only a move out of check is allowed");
+        } else {
+          throw new StillInCheckException("REALLY? When in check only a move out of check is allowed");
+        }
+      } else {
+        nextBoard.checkmatedPlayer = null;
+        System.err.println("  " + moveNumber + " How did it escape?");
       }
     }
     return nextBoard;
+  }
+
+  private void nextPlayer() {
+    player = player.getOpponent();
+  }
+
+  public void perform(Position current, Position candidate) {
+    if (getEnPassantCandidate() != null) {
+      if (getEnPassantCandidate().getPiece() == null) {
+        setEnPassantCandidate(null);
+      } else {
+        if (getEnPassantCandidate().getPiece().getPlayer()
+            == current.getPiece().getPlayer()) {
+          setEnPassantCandidate(null);
+        }
+      }
+    }
+
+    if (candidate.getPiece() != null
+        && candidate.getPiece().getPlayer() == current.getPiece().getPlayer()) {
+      throw new PositionOccupiedBySelfException(
+          "Player already occupies " + candidate);
+    }
+
+    if (current.getPiece() instanceof Rook &&
+        current.getBoard().getPosition(
+            kingsStart(current.getPiece().getPlayer())).getPiece()
+            != null
+        &&
+        current.getBoard().getPosition(
+            kingsStart(current.getPiece().getPlayer())).getPiece()
+            instanceof King
+        &&
+        current.getBoard().getPosition(
+            kingsStart(current.getPiece().getPlayer())).getPiece().getPlayer()
+            == current.getPiece().getPlayer()
+        ) {
+      // Rook and King are on their original positions,
+      // NOTE this allows them to have moved, which chess does not
+      if (current.getPiece().getPlayer().equals(Player.WHITE)) {
+        if (current.getSquare().toString().equals("A1") &&
+            candidate.getSquare().toString().equals("D1")) {
+          current.getBoard().castleSquare = new Square("C1");
+        } else if (current.getSquare().toString().equals("H1") &&
+            candidate.getSquare().toString().equals("F1")) {
+          current.getBoard().castleSquare = new Square("G1");
+        }
+      } else {
+        if (current.getSquare().toString().equals("A8") &&
+            candidate.getSquare().toString().equals("D8")) {
+          current.getBoard().castleSquare = new Square("C8");
+        } else if (current.getSquare().toString().equals("H8") &&
+            candidate.getSquare().toString().equals("F8")) {
+          current.getBoard().castleSquare = new Square("G8");
+        }
+      }
+    }
+
+    current.getPiece().assertIsPossible(current, candidate);
+
+    if (!(current.getPiece() instanceof Knight
+        || current.getPiece() instanceof King)) {
+      List<Square> path = getPath(current.getSquare(), candidate.getSquare());
+      if (!path.isEmpty()) {
+        if (!(castleSquare != null && path.size() == 1)) {
+          throw new InvalidPieceMoveException("Piece may not jump others " + path);
+        }
+      }
+    }
+
+    candidate.setPiece(current.getPiece());
+    current.setPiece(null);
+    if (candidate.getPiece() instanceof Pawn) {
+      if (candidate.getSquare().y() == 0 || candidate.getSquare().y() == 7) {
+        candidate.setPiece(new Queen(candidate.getPiece().getPlayer()));
+      }
+    }
+    if (castleSquare != null && ! (candidate.getPiece() instanceof Rook)) {
+      current.getBoard().castleSquare = null;
+    }
   }
 
   public List<Position> getOccupiedPositions() {
@@ -196,6 +307,14 @@ public class Board implements Cloneable {
     return them;
   }
 
+  public static String kingsStart(Player player) {
+    if (player == Player.WHITE) {
+      return "e1";
+    } else {
+      return "e8";
+    }
+  }
+
   public List<Position> getPlayersPositions(Player player) {
     // this would be better as a lambda how?
     ArrayList<Position> them = new ArrayList<>(16);
@@ -205,63 +324,6 @@ public class Board implements Cloneable {
       }
     }
     return them;
-  }
-
-  public void perform(Position current, Position candidate) {
-    boolean castling = false;
-    if (getEnPassantCandidate() != null) {
-      if (getEnPassantCandidate().getPiece() == null) {
-        setEnPassantCandidate(null);
-      } else {
-        if (getEnPassantCandidate().getPiece().getPlayer()
-            == current.getPiece().getPlayer()) {
-          setEnPassantCandidate(null);
-        }
-      }
-    }
-    if (candidate.getPiece() != null
-        && candidate.getPiece().getPlayer() == current.getPiece().getPlayer()) {
-      if (current.getPiece() instanceof Rook &&
-          candidate.getPiece() instanceof King) {
-
-        if (current.getSquare().x() > candidate.getSquare().x()) {
-
-          candidate.getSquare().getBoard().positions[candidate.getSquare().x() + 1][candidate.getSquare().y()]
-              .setPiece(candidate.getPiece());
-        } else {
-          candidate.getSquare().getBoard().positions[candidate.getSquare().x() - 1][candidate.getSquare().y()]
-              .setPiece(candidate.getPiece());
-        }
-        castling = true;
-      } else {
-        throw new PositionOccupiedBySelfException(
-            "Player already occupies " + candidate);
-      }
-
-    }
-
-    current.getPiece().assertIsPossible(current, candidate);
-
-    if (!(current.getPiece() instanceof Knight
-        || current.getPiece() instanceof King)) {
-      List<Square> path = getPath(current.getSquare(), candidate.getSquare());
-      if (!path.isEmpty()) {
-        if (!(castling && path.size() == 1)) {
-          throw new InvalidPieceMoveException("Piece may not jump others " + path);
-        }
-      }
-    }
-
-    moveWasCastle = castling;
-    candidate.setPiece(current.getPiece());
-    current.setPiece(null);
-    if (candidate.getPiece() instanceof Pawn) {
-      if (candidate.getSquare().y() == 0 || candidate.getSquare().y() == 7) {
-        candidate.setPiece(new Queen(candidate.getPiece().getPlayer()));
-      }
-    }
-
-
   }
 
   public List<Square> getPath(Square from, Square to) {
@@ -333,12 +395,8 @@ public class Board implements Cloneable {
 
 
   public Position getPosition(String squareName) {
-    Square s = new Square(this, squareName);
+    Square s = new Square(squareName);
     return positions[s.x()][s.y()];
-  }
-
-  public Piece pieceAt(String squareName) {
-    return getPosition(squareName).getPiece();
   }
 
   public Position getEnPassantCandidate() {
@@ -347,6 +405,14 @@ public class Board implements Cloneable {
 
   public void setEnPassantCandidate(Position candidate) {
     this.enPassantCandidate = candidate;
+  }
+
+  public void addIfStillOnBoard(ArrayList<Position> moves, int x, int y) {
+    try {
+      new Square(x, y);
+      moves.add(positions[x][y]);
+    } catch (InvalidChessCoordinateException ignore) {
+    }
   }
 
   @Override
@@ -359,7 +425,6 @@ public class Board implements Cloneable {
     if (!Arrays.deepEquals(positions, board.positions)) {
       return false;
     }
-    if (firstMover != board.firstMover) return false;
     return !(enPassantCandidate != null ? !enPassantCandidate.equals(board.enPassantCandidate) : board.enPassantCandidate != null);
 
   }
@@ -367,7 +432,6 @@ public class Board implements Cloneable {
   @Override
   public int hashCode() {
     int result = Arrays.deepHashCode(positions);
-    result = 31 * result + (firstMover != null ? firstMover.ordinal() : 0);
     result = 31 * result + (player != null ? player.ordinal() : 0);
     result = 31 * result + (enPassantCandidate != null ? enPassantCandidate.hashCode() : 0);
     return result;
@@ -377,18 +441,19 @@ public class Board implements Cloneable {
   public Board clone() {
     Position[][] newPositions = new Position[8][8];
     Board newBoard = new Board(newPositions);
-    newBoard.move = move + 1;
+    newBoard.moveNumber = moveNumber + 1;
     for (int x = 0; x < 8; x++) {
       for (int y = 0; y < 8; y++) {
         newPositions[x][y] = (Position) positions[x][y].clone();
-        newPositions[x][y].getSquare().board = newBoard;
+        newPositions[x][y].board = newBoard;
       }
     }
-    newBoard.firstMover = firstMover;
     newBoard.player = player;
     newBoard.checkedPlayer = checkedPlayer;
     newBoard.checkmatedPlayer = checkmatedPlayer;
-    newBoard.moveWasCastle = moveWasCastle;
+    if (castleSquare != null) {
+      newBoard.castleSquare = (Square) castleSquare.clone();
+    }
     if (enPassantCandidate != null) {
       newBoard.enPassantCandidate = (Position) enPassantCandidate.clone();
     }
@@ -416,14 +481,6 @@ public class Board implements Cloneable {
     it.append(" +--------+ \n");
     it.append("  abcdefgh  \n");
     return it.toString();
-  }
-
-  public void addIfStillOnBoard(ArrayList<Position> moves, int x, int y) {
-    try {
-      new Square(this, x, y);
-      moves.add(positions[x][y]);
-    } catch (InvalidChessCoordinateException ignore) {
-    }
   }
 
 }

@@ -17,22 +17,26 @@ public class King extends Piece {
 
   @Override
   public void assertIsPossible(Position from, Position to) {
-    if (! getPossibleMoves(from.getSquare()).contains(to)) {
-      throw new InvalidPieceMoveException("A " + getName() + " may only move one square in any direction");
+    if (! from.getPossibleMoves().contains(to)) {
+      if (! (to.getBoard().getCastleSquare() != null
+          && (to.getBoard().getCastleSquare().toString().equals(
+          to.getSquare().toString())))) {
+        throw new InvalidPieceMoveException("A " + getName() + " may only move one square in any direction");
+      }
     }
   }
 
   @Override
-  public List<Position> getPossibleMoves(Square from) {
+  public List<Position> getPossibleMoves(Board board, Square from) {
     ArrayList<Position> moves = new ArrayList<>(8);
-    from.getBoard().addIfStillOnBoard(moves, from.x()+1, from.y());
-    from.getBoard().addIfStillOnBoard(moves, from.x()+1, from.y()+1);
-    from.getBoard().addIfStillOnBoard(moves, from.x(), from.y()+1);
-    from.getBoard().addIfStillOnBoard(moves, from.x()-1, from.y()+1);
-    from.getBoard().addIfStillOnBoard(moves, from.x()-1, from.y());
-    from.getBoard().addIfStillOnBoard(moves, from.x()-1, from.y()-1);
-    from.getBoard().addIfStillOnBoard(moves, from.x(), from.y()-1);
-    from.getBoard().addIfStillOnBoard(moves, from.x()+1, from.y()-1);
+    board.addIfStillOnBoard(moves, from.x()+1, from.y());
+    board.addIfStillOnBoard(moves, from.x()+1, from.y()+1);
+    board.addIfStillOnBoard(moves, from.x(), from.y()+1);
+    board.addIfStillOnBoard(moves, from.x()-1, from.y()+1);
+    board.addIfStillOnBoard(moves, from.x()-1, from.y());
+    board.addIfStillOnBoard(moves, from.x()-1, from.y()-1);
+    board.addIfStillOnBoard(moves, from.x(), from.y()-1);
+    board.addIfStillOnBoard(moves, from.x()+1, from.y()-1);
 
     return moves;
   }

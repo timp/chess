@@ -17,23 +17,23 @@ public class Knight extends Piece {
 
   @Override
   public void assertIsPossible(Position from, Position to) {
-    if (!getPossibleMoves(from.getSquare()).contains(to)) {
+    if (!from.getPossibleMoves().contains(to)) {
       throw new InvalidPieceMoveException(
           " A " + getName() + " can only move two squares in one direction and one in another");
     }
   }
 
   @Override
-  public List<Position> getPossibleMoves(Square from) {
+  public List<Position> getPossibleMoves(Board board, Square from) {
     ArrayList<Position> moves = new ArrayList<>(8);
-    from.getBoard().addIfStillOnBoard(moves, from.x() + 1, from.y() + 2);
-    from.getBoard().addIfStillOnBoard(moves, from.x() + 2, from.y() + 1);
-    from.getBoard().addIfStillOnBoard(moves, from.x() + 2, from.y() - 1);
-    from.getBoard().addIfStillOnBoard(moves, from.x() + 1, from.y() - 2);
-    from.getBoard().addIfStillOnBoard(moves, from.x() - 1, from.y() - 2);
-    from.getBoard().addIfStillOnBoard(moves, from.x() - 2, from.y() - 1);
-    from.getBoard().addIfStillOnBoard(moves, from.x() - 2, from.y() + 1);
-    from.getBoard().addIfStillOnBoard(moves, from.x() - 1, from.y() + 2);
+    board.addIfStillOnBoard(moves, from.x() + 1, from.y() + 2);
+    board.addIfStillOnBoard(moves, from.x() + 2, from.y() + 1);
+    board.addIfStillOnBoard(moves, from.x() + 2, from.y() - 1);
+    board.addIfStillOnBoard(moves, from.x() + 1, from.y() - 2);
+    board.addIfStillOnBoard(moves, from.x() - 1, from.y() - 2);
+    board.addIfStillOnBoard(moves, from.x() - 2, from.y() - 1);
+    board.addIfStillOnBoard(moves, from.x() - 2, from.y() + 1);
+    board.addIfStillOnBoard(moves, from.x() - 1, from.y() + 2);
     return moves;
   }
 

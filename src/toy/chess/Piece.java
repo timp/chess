@@ -59,7 +59,7 @@ public abstract class Piece implements Cloneable {
 
   public abstract void assertIsPossible(Position from, Position to);
 
-  public abstract List<Position> getPossibleMoves(Square from);
+  public abstract List<Position> getPossibleMoves(Board board, Square from);
 
   /** Deliberately does not declare CloneNotSupportedException
    * as we do not want the noise.

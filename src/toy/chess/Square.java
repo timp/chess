@@ -8,33 +8,26 @@ package toy.chess;
  */
 public class Square implements Cloneable {
 
-  Board board;
   Rank rank;
   File file;
 
   // Used by clone
   private Square() {}
 
-  public Square(Board board, int x, int y) {
-    this.board = board;
+  public Square(int x, int y) {
     assertValid(x);
     assertValid(y);
     this.file = File.byIndex(x);
     this.rank = Rank.byIndex(y);
   }
 
-  public Square(Board board, String squareCode) {
-    this(board, new SquareCode(squareCode));
+  public Square(String squareCode) {
+    this(new SquareCode(squareCode));
   }
 
-  public Square(Board board, SquareCode squareCode) {
-    this.board = board;
+  public Square(SquareCode squareCode) {
     this.rank = Rank.byName(squareCode.rank());
     this.file = File.byName(squareCode.file());
-  }
-
-  public Board getBoard() {
-    return board;
   }
 
   private boolean assertValid(int coord) {
