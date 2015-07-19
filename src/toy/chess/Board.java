@@ -134,11 +134,9 @@ public class Board implements Cloneable {
     from = nextBoard.positions[fromSquare.x()][fromSquare.y()];
 
     if (player == from.getPiece().getPlayer()) {
-      if (from.getPiece() instanceof King &&
+      if (!(from.getPiece() instanceof King &&
           castleSquare != null &&
-          castleSquare.equals(to.getSquare())) {
-        //player = from.getPiece().getPlayer();
-      } else {
+          castleSquare.equals(to.getSquare()))) {
         throw new InvalidTurnException("Current turn is " + player.getOpponent()
             + " from " + from
             + (from.getBoard().castleSquare == null
