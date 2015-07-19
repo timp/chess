@@ -44,7 +44,6 @@ public class Game {
 
   public void play() throws IOException {
     board = new Board();
-    String player = "1";
     try {
       while (true) {
         MoveCode mc = nextMove();
