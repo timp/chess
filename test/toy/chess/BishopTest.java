@@ -27,7 +27,7 @@ public class BishopTest extends TestCase {
     it = it.m("c1a3").m("g7g6");
     it = it.m("a3b2").m("g6g5");
     it = it.m("b2e5").m("g5g4");
-    it = it.m("e5b8").m("g4g3");
+    it.m("e5b8").m("g4g3");
   }
   public void testPathIsEmpty() {
     Board it = new Board();

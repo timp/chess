@@ -158,7 +158,7 @@ public class RookTest extends TestCase {
     } catch (InvalidPieceMoveException e) {}
     try {
       it.m("a1d1");
-    } catch (PositionOccupiedBySelfException e) {};
+    } catch (PositionOccupiedBySelfException e) {}
   }
 
 }

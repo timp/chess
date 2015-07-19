@@ -17,7 +17,7 @@ public class KingTest extends TestCase {
     it = it.m("d4c3").m("h4h3");
     it = it.m("c3d3").m("g7g6");
     it = it.m("d3e2").m("g6g5");
-    it = it.m("e2e1").m("g5g4");
+    it.m("e2e1").m("g5g4");
   }
   public void testCanotnMoveIntoCheck() {
     Board it = new Board();

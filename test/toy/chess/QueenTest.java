@@ -13,7 +13,7 @@ public class QueenTest extends TestCase {
     it = it.m("d1a4").m("h7h6");
     it = it.m("a4b5").m("h6h5");
     it = it.m("b5c5").m("g7g6");
-    it = it.m("c5c8").m("g6g5");
+    it.m("c5c8").m("g6g5");
   }
   public void testInvalidMove(){
     Board it = new Board();
