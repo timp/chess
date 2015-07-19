@@ -46,7 +46,7 @@ public class GameTest extends TestCase {
   public void testEndOncheck() throws Exception {
     Game g = new Game("data/endOnCheck.txt");
     g.play();
-    assertEquals(Player.BLACK, g.getBoard().getPlayer());
+    assertEquals(Player.WHITE, g.getBoard().getPlayer());
     assertEquals(Player.BLACK, g.getBoard().getCheckedPlayer());
     assertNull(g.getBoard().getCheckmatedPlayer());
   }
