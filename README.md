@@ -2,7 +2,7 @@
 
 This exercise was set as an interview test, with a time limit of four hours.
 I decided to embrace being [nerd sniped](https://xkcd.com/356/) and 
-see what it would take develop a solution, without researching other solutions.
+see what it would take to develop a solution, without researching other solutions.
 It is a fair sized toy problem, suitable for a college term assignment and 
 has taken me two weeks elapsed time, probably around 40 hours.
 
