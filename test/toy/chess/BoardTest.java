@@ -110,7 +110,7 @@ public class BoardTest extends TestCase {
       it.m("h5h4");
     } catch (StillInCheckException e) {}
     System.err.println(it);
-    // take night that had us in check
+    // take knight that had us in check
     it.m("e7d6");
 
   }
