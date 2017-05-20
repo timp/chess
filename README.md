@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/timp/chess.svg?branch=master)](https://travis-ci.org/timp/chess)
 # Chess move validator
 
 This exercise was set as an interview test, with a time limit of four hours.
