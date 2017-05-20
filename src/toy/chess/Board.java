@@ -149,6 +149,7 @@ public class Board implements Cloneable {
     nextBoard.perform(from, to);
 
     // Check for check
+    // TODO when should this not be nulled?
     nextBoard.checkedPlayer = null;
     for (Position p : nextBoard.getOccupiedPositions()) {
       for (Position poss : p.getPossibleMoves()) {
@@ -161,6 +162,7 @@ public class Board implements Cloneable {
             String killerMove = p.getSquare().toString() + poss.getSquare().toString();
             regicide.move(new MoveCode(killerMove), false);
             nextBoard.checkedPlayer = p.getPiece().getPlayer().getOpponent();
+            System.err.println("Have set checked player to " + nextBoard.checkedPlayer);
           } catch (InvalidMoveException e) { }
         }
       }
@@ -175,17 +177,18 @@ public class Board implements Cloneable {
           if (checkForMate) {
             System.err.println("Checking for mate: " + fromTo);
             Board nextNextBoard = nextBoard.clone();
+
             boolean mated = true;
             for (Position p : nextNextBoard.getPlayersPositions(nextNextBoard.checkedPlayer)) {
               for (Position poss : p.getPossibleMoves()) {
                 try {
                   String outOfCheck = p.getSquare().toString() + poss.getSquare().toString();
                   Board result = nextNextBoard.move(new MoveCode(outOfCheck), false);
-                  if ( result.checkedPlayer == null) {
+                  if (result.checkedPlayer == null) {
                     mated = false;
                     System.err.println("There is escape: " + outOfCheck);
                     System.err.println(" " + moveNumber +
-                        " escaped check: " + result.checkedPlayer);
+                        " escaped check - checked player is " + result.checkedPlayer);
                   }
                 } catch (InvalidMoveException e) {}
               }
@@ -197,12 +200,37 @@ public class Board implements Cloneable {
         }
       }
     } else {
-      System.err.println(" " + moveNumber + " " + fromTo + " " + player + " is still in check");
+      System.err.println(" " + moveNumber + " " + fromTo + " " + checkedPlayer + " is still in check");
+
+      if (checkForMate) {
+        System.err.println("Checking for mate: " + fromTo);
+        Board nextNextBoard = nextBoard.clone();
+
+        boolean mated = true;
+        for (Position p : nextNextBoard.getPlayersPositions(nextNextBoard.checkedPlayer)) {
+          for (Position poss : p.getPossibleMoves()) {
+            try {
+              String outOfCheck = p.getSquare().toString() + poss.getSquare().toString();
+              Board result = nextNextBoard.move(new MoveCode(outOfCheck), false);
+              if (result.checkedPlayer == null) {
+                mated = false;
+                System.err.println("There is escape: " + outOfCheck);
+                System.err.println(" " + moveNumber +
+                    " escaped check: " + result.checkedPlayer);
+              }
+            } catch (InvalidMoveException e) {}
+          }
+        }
+        if (mated) {
+          nextBoard.checkmatedPlayer = nextBoard.checkedPlayer;
+        }
+      }
+
       if (nextBoard.checkedPlayer != null) {
         if (nextBoard.checkedPlayer == to.getPiece().getPlayer()) {
           throw new StillInCheckException("When in check only a move out of check is allowed");
         } else {
-          throw new StillInCheckException("REALLY? When in check only a move out of check is allowed");
+          throw new StillInCheckException("wtf When in check only a move out of check is allowed");
         }
       } else {
         nextBoard.checkmatedPlayer = null;
