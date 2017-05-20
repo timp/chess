@@ -1,6 +1,7 @@
 package toy.chess;
 
 import junit.framework.TestCase;
+import org.junit.Ignore;
 
 /**
  * @author timp
@@ -22,13 +23,14 @@ public class GameTest extends TestCase {
     }
   }
 
+  @Ignore("TODO Fix checkmate")
   public void testQuickCheckmateMoves() throws Exception {
     Game g = new Game("data/quick-checkmate.txt");
     g.play();
     assertEquals(Player.WHITE, g.getBoard().getPlayer());
     assertEquals(Player.BLACK, g.getBoard().getCheckedPlayer());
-    //TODO Fix checkmate
-    //assertEquals(Player.BLACK, g.getBoard().getCheckmatedPlayer());
+// TODO fix
+//    assertEquals(Player.BLACK, g.getBoard().getCheckmatedPlayer());
   }
 
   public void testInvalidCode() throws Exception {
@@ -40,8 +42,13 @@ public class GameTest extends TestCase {
     }
   }
 
+  /** Kasparov's opponent resigned, hence no check or mate. */
   public void testKasparovsImortal1999() throws Exception {
-    Game.main(new String[]{"data/Kasparovs-Immortal-1999.txt"});
+    Game g = new Game("data/Kasparovs-Immortal-1999.txt");
+    g.play();
+    assertEquals(Player.WHITE, g.getBoard().getPlayer());
+    assertNull(g.getBoard().getCheckedPlayer());
+    assertNull(g.getBoard().getCheckmatedPlayer());
   }
 
   public void testEndOncheck() throws Exception {
@@ -49,7 +56,8 @@ public class GameTest extends TestCase {
     g.play();
     assertEquals(Player.WHITE, g.getBoard().getPlayer());
     assertEquals(Player.BLACK, g.getBoard().getCheckedPlayer());
-    assertNull(g.getBoard().getCheckmatedPlayer());
+    assertNull(g.getBoard().getCheckmatedPlayer() + " is checkmated",
+        g.getBoard().getCheckmatedPlayer());
   }
 
 
